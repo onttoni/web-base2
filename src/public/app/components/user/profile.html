@@ -1,0 +1,12 @@
+<h2>Profile</h2>
+<div>
+  <form name="formUserProfile" class="form-user-profile" (ngSubmit)="update()" novalidate>
+    <template ngFor #key [ngForOf]="displayFields">
+      <form-group [key]="key" [doc]="doc.doc" *ngIf="key!='password'"></form-group>
+    </template>
+    <div>
+      <button class="btn btn-default" type="submit" ng-disabled="formUserProfile.$invalid"><i class="fa fa-floppy-o"></i>Save</button>
+      <button [routerLink]="['Home']" class="btn btn-default"><i class="fa fa-times"></i>Cancel</button>
+    </div>
+  </form>
+</div>
