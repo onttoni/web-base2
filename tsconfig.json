@@ -1,0 +1,28 @@
+{
+  "compilerOptions": {
+    "emitDecoratorMetadata": true,
+    "experimentalDecorators": true,
+    "module": "commonjs",
+    "moduleResolution": "node",
+    "removeComments": true,
+    "rootDir": "./src",
+    "sourceMap": true,
+    "target": "ES5"
+  },
+  "files": [
+    "typings/tsd.d.ts",
+    "src/public/app/app.component.ts",
+    "src/public/app/shared/directives/navbar.ts",
+    "src/public/app/shared/services/userService.ts",
+    "src/public/app/shared/utils/personUtils.ts",
+    "src/public/app/components/about/about.ts",
+    "src/public/app/components/home/home.ts",
+    "src/public/app/components/user/login.ts",
+    "src/public/app/components/user/logout.ts",
+    "src/public/app/components/user/profile.ts",
+    "src/public/app/components/user/signup.ts",
+    "src/public/app/bootstrap.ts",
+    "src/public/app/vendor.ts"
+  ],
+  "compileOnSave": false
+}

@@ -1,0 +1,5 @@
+{
+  "disallowUnusedParams": true,
+  "maximumLineLength": 120,
+  "preset": "google"
+}
