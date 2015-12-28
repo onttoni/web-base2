@@ -11,6 +11,8 @@
   },
   "files": [
     "typings/tsd.d.ts",
+    "src/public/bootstrap.ts",
+    "src/public/vendor.ts",
     "src/public/app/app.component.ts",
     "src/public/app/shared/directives/navbar.ts",
     "src/public/app/shared/services/userService.ts",
@@ -20,9 +22,7 @@
     "src/public/app/components/user/login.ts",
     "src/public/app/components/user/logout.ts",
     "src/public/app/components/user/profile.ts",
-    "src/public/app/components/user/signup.ts",
-    "src/public/app/bootstrap.ts",
-    "src/public/app/vendor.ts"
+    "src/public/app/components/user/signup.ts"
   ],
   "compileOnSave": false
 }
