@@ -12,4 +12,8 @@ export class Home {
   constructor() {
     console.debug('Home constructor.');
   }
+
+  public reload() {
+    location.reload();
+  }
 }
