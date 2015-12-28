@@ -19,8 +19,8 @@
     "src/public/app/shared/utils/personUtils.ts",
     "src/public/app/components/about/about.ts",
     "src/public/app/components/home/home.ts",
-    "src/public/app/components/user/login.ts",
-    "src/public/app/components/user/logout.ts",
+    "src/public/app/components/user/signin.ts",
+    "src/public/app/components/user/signout.ts",
     "src/public/app/components/user/profile.ts",
     "src/public/app/components/user/signup.ts"
   ],
