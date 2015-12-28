@@ -5,7 +5,7 @@ import {RouterLink} from 'angular2/router';
   directives: [RouterLink],
   pipes: [],
   providers: [],
-  selector: 'app',
+  selector: 'home',
   template: require('./home.html')
 })
 export class Home {
