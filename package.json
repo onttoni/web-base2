@@ -61,6 +61,7 @@
   "scripts": {
     "start": "nodemon -w src/server/ src/server/server.js |bunyan -o short -L",
     "grunt-debug": "grunt debug",
+    "grunt-tsd": "grunt tsd",
     "grunt-watch": "grunt watch"
   }
 }
