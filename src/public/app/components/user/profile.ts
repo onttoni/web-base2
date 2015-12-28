@@ -11,10 +11,10 @@ import {PersonDoc} from '../../shared/utils/personUtils';
 })
 @View({
   directives: [FORM_DIRECTIVES],
-  template: `<div class="form-group" *ngIf="key!='password'">
-            <label class="text-capitalize">{{key}}</label>
-            <input type="text" class="form-control"
-              ngModel={{doc.get(key)}} #item (change)="onChange(item.value)" required/>
+  template: `<div class="form-group">
+              <label class="text-capitalize">{{key}}</label>
+              <input type="text" class="form-control"
+                ngModel={{doc.get(key)}} #item (change)="onChange(item.value)" required/>
             </div>`
 })
 export class FormGroup {
@@ -42,14 +42,14 @@ export class UserProfile {
   public doc: any = new PersonDoc('userSchema', {});
   public displayFields: Array<string> = this.doc.doc.displayFields();
 
-  constructor(private router: Router, private _userService: UserService) {
+  constructor(private _router: Router, private _userService: UserService) {
     console.debug('UserProfile constructor');
     this.whoAmI();
   }
 
   public cancel(): void {
     console.debug('UserProfile cancelled');
-    this.router.navigate(['Home']);
+    this._router.navigate(['Home']);
   }
 
   public ngOnChanges(changeRecord) {
@@ -60,8 +60,8 @@ export class UserProfile {
     console.debug('UserProfile ngOnInit');
   }
 
-  public update(): void {
-    console.debug('UserProfile update');
+  public onSubmit(): void {
+    console.debug('UserProfile onSubmit');
     console.debug('UserProfile doc is now', this.doc);
     this.doc.doc.validate((err) => {
       if (err) {
@@ -69,7 +69,7 @@ export class UserProfile {
         return;
       }
       // UserService.update({update: extractDocData($scope)});
-      this.router.navigate(['Home']);
+      this._router.navigate(['Home']);
     });
   }
 
