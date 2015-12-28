@@ -1,0 +1,62 @@
+/* element selectors */
+a {
+  cursor: pointer;
+}
+
+a > i.fa {
+  padding-right: 2px;
+}
+
+body {
+  color:red; margin:0px;
+  padding-top: 50px;
+}
+
+button > i.fa {
+  padding-right: 2px;
+}
+
+table .btn {
+  padding: 1px 5px 1px;
+  margin-right: -3px;
+}
+
+
+/* class selectors */
+.a-class {
+  color:blue;
+}
+
+.fa-test {
+  font-family: "FontAwesome";
+  font-size: 24px;
+}
+
+.form-friend-details, .form-friend-add, .form-user-signup {
+  margin: 0 auto;
+  border-style: solid;
+  border-width: 2px;
+  border-color: #30bb94;
+  border-radius: 5px;
+  padding: 8px;
+}
+
+.chat-msg {
+  padding-right: 3px;
+}
+
+.chat-msg-window {
+  margin: 0 auto;
+  border-style: solid;
+  border-width: 2px;
+  border-color: #30bb94;
+  border-radius: 5px;
+  padding: 8px;
+  max-height: 300px;
+  overflow-y:scroll;
+}
+
+/* id selectors */
+#an-id {
+  text-shadow: 2px 2px #ff0000;
+}
