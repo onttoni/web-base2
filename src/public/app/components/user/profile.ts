@@ -35,14 +35,14 @@ export class FormGroup {
   // providers: [],
   // pipes: [],
   // styles: [ require('./some.css') ],
-  template: require('./profile.html.tmpl')
+  template: require('./profile.html')
 })
 export class UserProfile {
 
   public doc: any = new PersonDoc('userSchema', {});
   public displayFields: Array<string> = this.doc.doc.displayFields();
 
-  constructor(private router: Router, private userService: UserService) {
+  constructor(private router: Router, private _userService: UserService) {
     console.debug('UserProfile constructor');
     this.whoAmI();
   }
@@ -74,11 +74,11 @@ export class UserProfile {
   }
 
   private whoAmI(): void {
-    let _user = this.userService.getUser();
+    let _user = this._userService.get();
     if (_user !== null) {
       this.doc.update(_user);
     } else {
-      this.userService.user$.subscribe(
+      this._userService.user$.subscribe(
         (user: User) => {
           if (user !== null) {
             this.doc.update(user);
