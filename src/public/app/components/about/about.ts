@@ -9,12 +9,12 @@ import {Router} from 'angular2/router';
   template: require('./about.html')
 })
 export class About {
-  constructor(private router: Router) {
+  constructor(private _router: Router) {
     console.debug('About constructor.');
   }
 
   public onOk(): void {
-    this.router.navigate(['Home']);
+    this._router.navigate(['Home']);
   };
 
   public getUa(): string {
