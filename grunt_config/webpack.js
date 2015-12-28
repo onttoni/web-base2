@@ -5,8 +5,8 @@ var CommonsChunkPlugin = webpack.optimize.CommonsChunkPlugin;
 module.exports = {
   debug: {
     entry: {
-      app: './src/public/app/bootstrap.ts',
-      vendor: './src/public/app/vendor.ts'
+      app: './src/public/bootstrap.ts',
+      vendor: './src/public/vendor.ts'
     },
 
     output: {
