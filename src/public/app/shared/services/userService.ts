@@ -4,6 +4,11 @@ import {Observable} from 'rxjs/Observable';
 import _ = require('lodash');
 
 
+class UpdateRequestOptions extends BaseRequestOptions {
+  public headers: Headers = new Headers({'Content-Type': 'application/json'});
+}
+
+
 class SigninRequestOptions extends BaseRequestOptions {
   public search: URLSearchParams = new URLSearchParams('login=true');
   public headers: Headers = new Headers({'Content-Type': 'application/json'});
@@ -39,7 +44,7 @@ interface UserInterface {
 export class User implements UserInterface {
   public email: string;
   public name: Name;
-  public password: string
+  public password: string;
   public token: string;
 
   constructor(obj: any);
@@ -97,8 +102,10 @@ export class UserService {
     .subscribe(data => this._setSignedIn(data), error => this._unsetSignedIn());
   }
 
-  public update(): void {
-
+  public update(user: User): void {
+    this._http.put('/api/users', JSON.stringify(user), new UpdateRequestOptions())
+    .map(response => response.json())
+    .subscribe(data => this._setSignedIn(data), error => this._unsetSignedIn());
   }
 
   private _setSignedIn(data) {
