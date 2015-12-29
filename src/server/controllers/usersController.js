@@ -42,7 +42,7 @@ module.exports.controller = function(app, apiPrefix, passport) {
       User.findOneAndUpdate({
         _id: id
       },
-      req.body.update,
+      req.body,
       {new: true, upsert: false},
       function(err, obj) {
         if (err) {
