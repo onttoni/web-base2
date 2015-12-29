@@ -15,24 +15,41 @@ class SignoutRequestOptions extends BaseRequestOptions {
 }
 
 
+class SignupRequestOptions extends BaseRequestOptions {
+  public search: URLSearchParams = new URLSearchParams('signup=true');
+  public headers: Headers = new Headers({'Content-Type': 'application/json'});
+}
+
+
+class Name {
+  public given: string;
+  public family: string;
+  public formatted: string;
+}
+
+
 interface UserInterface {
   email: string;
-  name: {
-    formatted: string;
-  };
+  name?: Name;
   password?: string;
   token?: string;
 }
 
 
 export class User implements UserInterface {
-  public name: {
-    formatted: string;
-  };
+  public email: string;
+  public name: Name;
+  public password: string
   public token: string;
 
-  constructor(public email: string, public password: string) {
+  constructor(obj: any);
+  constructor(email: string, password: string);
+  constructor(emailOrObj: any, password?: string) {
     console.debug('User constructor.');
+    this.email = _.get(emailOrObj, 'email', emailOrObj);
+    this.password = _.get(emailOrObj, 'password', password);
+    this.name = _.get(emailOrObj, 'name', new Name());
+    console.debug('User is:', this);
   }
 }
 
@@ -74,8 +91,10 @@ export class UserService {
     .subscribe(null, null, () => this._unsetSignedIn());
   }
 
-  public signup(): void {
-
+  public signup(user: User): void {
+    this._http.post('/api/users', JSON.stringify(user), new SignupRequestOptions())
+    .map(response => response.json())
+    .subscribe(data => this._setSignedIn(data), error => this._unsetSignedIn());
   }
 
   public update(): void {
