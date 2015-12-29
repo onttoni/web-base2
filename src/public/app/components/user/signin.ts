@@ -21,7 +21,7 @@ export class UserSignin {
     this._router.navigate(['Home']);
   }
 
-  public onSignin(): void {
+  public onSubmit(): void {
     this._userService.user$.subscribe(
       (user: User) => {
         if (user !== null) {
