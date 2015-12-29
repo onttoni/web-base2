@@ -1,0 +1,12 @@
+<h2>Sign up</h2>
+<div>
+  <form class="form-user-signup" (ngSubmit)="onSubmit()" novalidate>
+    <template ngFor #key [ngForOf]="displayFields">
+      <form-group [key]="key" [doc]="doc.doc"></form-group>
+    </template>
+    <div>
+      <button class="btn btn-default" type="submit"><i class="fa fa-floppy-o"></i>Save</button>
+      <button [routerLink]="['Home']" class="btn btn-default"><i class="fa fa-times"></i>Cancel</button>
+    </div>
+  </form>
+</div>
