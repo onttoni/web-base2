@@ -15,10 +15,12 @@ export class PersonDoc {
     }
 
     public extract(): any {
+      console.debug('PersonDoc extract');
       let data: any = {};
       this.doc.displayFields().forEach((field: string) => {
-        data[field] = _.get(this.doc, field);
+        _.set(data, field, _.get(this.doc, field));
       });
+      console.debug('PersonDoc data is:', data);
       return data;
     }
 
