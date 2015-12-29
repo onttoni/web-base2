@@ -68,8 +68,14 @@ export class UserProfile {
         console.debug('Validation error when updating user', err.errors);
         return;
       }
-      // UserService.update({update: extractDocData($scope)});
-      this._router.navigate(['Home']);
+      this._userService.user$.subscribe(
+        (user: User) => {
+          if (user !== null) {
+            this._router.navigate(['Home']);
+          }
+        }
+      );
+      this._userService.update(new User(this.doc.extract()));
     });
   }
 
