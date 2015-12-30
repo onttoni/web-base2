@@ -1,4 +1,4 @@
-import {Component, View} from 'angular2/core';
+import {Component, ViewChild, View} from 'angular2/core';
 import {FORM_DIRECTIVES, NgFor, NgIf} from 'angular2/common';
 import {Router, RouterLink} from 'angular2/router';
 import {User, UserService} from '../../shared/services/userService';
@@ -6,39 +6,57 @@ import {PersonDoc} from '../../shared/utils/personUtils';
 
 
 @Component({
-  properties: ['doc', 'key'],
+  properties: ['_doc', '_key'],
   providers: [],
   selector: 'form-group'
 })
 @View({
   directives: [FORM_DIRECTIVES, NgIf],
   template: `<div class="form-group">
-              <label class="text-capitalize">{{key}}</label>
-              <input type="text" class="form-control" *ngIf="key!='password'"
-                ngModel={{doc.get(key)}} #item (change)="onChange(item.value)" required/>
-              <input type="password" class="form-control" *ngIf="key=='password'"
-                ngModel={{doc.get(key)}} #item (change)="onChange(item.value)" required/>
-            </div>
-            <div class="form-group" *ngIf="key=='password'">
-              <label>Verify password</label>
-              <input type="password" class="form-control"
-                [(ngModel)]="passwordVerify" required/>
+              <label class="text-capitalize">{{_key}}</label>
+              <input type="text" class="form-control" *ngIf="_key!='password'"
+                ngModel={{_doc.get(_key)}} #item (change)="onChange(item.value)" required/>
+              <input type="password" class="form-control" *ngIf="_key=='password'"
+                ngModel={{_doc.get(_key)}} #item (change)="onChange(item.value)" required/>
             </div>`
 })
 export class FormGroup {
 
-  public doc: any;
-  public key: string;
+  private _doc: any;
+  private _key: string;
 
   public onChange(value: string) {
     console.debug('FormGroup onChange', value);
-    this.doc.set(this.key, value);
+    this._doc.set(this._key, value);
   }
 }
 
 
 @Component({
-  directives: [FORM_DIRECTIVES, FormGroup, NgFor, RouterLink],
+  properties: [],
+  providers: [],
+  selector: 'form-group-password-verify'
+})
+@View({
+  directives: [FORM_DIRECTIVES],
+  template: `<div class="form-group">
+              <label class="text-capitalize">password.verify</label>
+              <input type="password" class="form-control"
+                [(ngModel)]=passwordVerify #item (change)="onChange(item.value)" required/>
+            </div>`
+})
+export class FormGroupPasswordVerify {
+
+  public passwordVerify: string;
+
+  public onChange(value: string) {
+    console.debug('FormGroupPasswordVerify onChange', value);
+  }
+}
+
+
+@Component({
+  directives: [FORM_DIRECTIVES, FormGroup, FormGroupPasswordVerify, NgFor, RouterLink],
   pipes: [],
   providers: [],
   selector: 'signup',
@@ -46,17 +64,22 @@ export class FormGroup {
 })
 export class UserSignup {
 
-  public doc: any = new PersonDoc('userSchema', {});
-  public displayFields: Array<string> = this.doc.doc.displayFields();
+  private _doc: any = new PersonDoc('userSchema', {});
+  private _displayFields: Array<string> = this._doc.doc.displayFields();
+  @ViewChild(FormGroupPasswordVerify) private _formGroupPasswordVerify;
 
   constructor(private _router: Router, private _userService: UserService) {
     console.debug('UserSignup constructor.');
   }
 
   public onSubmit(): void {
-    this.doc.doc.validate((err) => {
+    if (this._doc.doc.password !== this._formGroupPasswordVerify.passwordVerify) {
+      console.error('Password verification failed.');
+      return;
+    }
+    this._doc.doc.validate((err) => {
       if (err) {
-        console.error('Validation error when signing up user', err.errors);
+        console.error('Validation error when signing up user:', err.errors);
         return;
       }
       this._userService.user$.subscribe(
@@ -66,7 +89,7 @@ export class UserSignup {
           }
         }
       );
-      this._userService.signup(new User(this.doc.extract()));
+      this._userService.signup(new User(this._doc.extract()));
     });
   }
 
