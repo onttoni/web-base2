@@ -1,4 +1,4 @@
-var moment = require('moment');
+var _ = require('lodash');
 var log = require('../logger');
 var User = require('../models/user');
 
@@ -12,28 +12,26 @@ module.exports.events = function(socket) {
 
   function getOutput(user, msg) {
     return {
-      time: moment(),
+      time: Date.now(),
       userEmail: user.email,
       msg: msg
     };
   }
 
-  socket.on('chat:join', function() {
-    var output = getOutput(socket.decoded_token, 'joined');
-    socket.emit('chat:hello', output);
-    socket.broadcast.emit('chat:say', output);
-  });
-
-  socket.on('chat:msg', function(data) {
-    var output = getOutput(socket.decoded_token, data);
-    socket.emit('chat:say', output);
-    socket.broadcast.emit('chat:say', output);
-  });
-
-  socket.on('chat:leave', function() {
-    var output = getOutput(socket.decoded_token, 'left');
-    socket.emit('chat:bye', output);
-    socket.broadcast.emit('chat:say', output);
+  socket.on('chat', function(data) {
+    var event = _.get(data, 'event');
+    var msg = _.get(data, 'msg');
+    var output;
+    if (msg) {
+      output = getOutput(socket.decoded_token, msg);
+    } else if (event) {
+      output = getOutput(socket.decoded_token, event);
+    } else {
+      console.error('Chat could not recognize payload type.');
+      return;
+    }
+    socket.emit('chat', output);
+    socket.broadcast.emit('chat', output);
   });
 
 };
