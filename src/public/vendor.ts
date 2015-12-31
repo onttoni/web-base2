@@ -14,3 +14,4 @@ import 'bootstrap';
 import 'jquery';
 import 'lodash';
 import 'rxjs';
+import 'socket.io-client';
