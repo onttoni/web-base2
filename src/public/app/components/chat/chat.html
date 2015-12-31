@@ -1,0 +1,20 @@
+<h2>Chat</h2>
+<div>
+  <form name="formChat" class="form-chat" novalidate>
+    <div class="form-group chat-msg-window">
+      <template ngFor #msg [ngForOf]="getMessages()">
+        <div>
+          <span class="chat-msg time">{{msg.time | date: 'HH:mm:ss'}}</span>
+          <span class="chat-msg user-email">{{msg.userEmail}}</span>
+          <span class="chat-msg">{{msg.msg}}</span>
+        </div>
+      </template>
+    </div>
+  </form>
+  <form class="form-inline">
+    <div class="form-group">
+      <input type="text" class="form-control" placeholder="Say something" [(ngModel)]="_input"/>
+      <button class="btn btn-default" type="submit" (click)="onSend()"><i class="fa fa-lightbulb-o"></i>Send</button>
+    </div>
+  </form>
+</div>
