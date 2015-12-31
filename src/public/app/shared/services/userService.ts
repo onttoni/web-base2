@@ -1,6 +1,7 @@
 import {Injectable} from 'angular2/core';
 import {BaseRequestOptions, Headers, Http, URLSearchParams} from 'angular2/http';
 import {Observable} from 'rxjs/Observable';
+import {Observer} from 'rxjs/Observer';
 import _ = require('lodash');
 
 
@@ -63,12 +64,12 @@ export class User implements UserInterface {
 export class UserService {
   public user$: Observable<User>;
   private _signedIn: boolean = false;
-  private _userObserver: any;
+  private _userObserver: Observer<User>;
   private _user: User = null;
 
   constructor(private _http: Http) {
     console.debug('UserService constructor.');
-    this.user$ = new Observable(observer => {
+    this.user$ = Observable.create(observer => {
       this._userObserver = observer;
       this.get();
     }).share();
