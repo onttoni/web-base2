@@ -1,6 +1,7 @@
 import {Injectable} from 'angular2/core';
 import {Observable} from 'rxjs/Observable';
 import {Observer} from 'rxjs/Observer';
+import _ = require('lodash');
 import io = require('socket.io-client');
 
 
@@ -25,35 +26,15 @@ export class SocketService {
     console.debug('SocketService constructor.');
     this.connection$ = Observable.create(observer => {
       this._connectionObserver = observer;
-      this.connect();
     }).share();
   }
 
-  public connect(): void {
-    if (this._socket) {
-      return;
-    }
-    console.debug('SocketService connecting');
-    this._socket = io.connect(window.location.origin, new ConnectOpts());
-    this._socket.on('connect', () => {
-      this._socket.on('authenticated', () => {
-        console.debug('SocketService connected');
-        this._connectionObserver.next(true);
-      }).emit('authenticate', {token: localStorage.getItem('token')});
-    });
-  }
-
-  public disconnect(): void {
-    if (!this._socket) {
-      return;
-    }
-    console.debug('SocketService disconnecting');
-    this._connectionObserver.next(false);
-    this._socket.disconnect();
-    this._socket = null;
+  public isConnected(): boolean {
+    return _.get(this, '_socket.connected', false);
   }
 
   public registerReceiver(prefix: string, callback: any): void {
+    this._connect();
     this._clientObservables[prefix] = Observable.fromEventPattern(
       () => {
         this._socket.on(prefix, callback);
@@ -74,8 +55,15 @@ export class SocketService {
       });
   }
 
+  public deregisterReceiver(prefix: string): void {
+    delete this._clientObservables[prefix];
+    if (_.size(this._clientObservables) === 0) {
+      this._disconnect();
+    }
+  }
+
   public emit(eventName: string, data?: any, callback?: any): void {
-    if (!this._socket) {
+    if (this.isConnected() === false) {
       return;
     }
     this._socket.emit(eventName, data, function() {
@@ -84,6 +72,30 @@ export class SocketService {
         callback.apply(this._socket, args);
       }
     });
+  }
+
+  private _connect(): void {
+    if (this.isConnected() === true) {
+      this._connectionObserver.next(true);
+      return;
+    }
+    console.debug('SocketService connecting');
+    this._socket = io.connect(window.location.origin, new ConnectOpts());
+    this._socket.on('connect', () => {
+      this._socket.on('authenticated', () => {
+        console.debug('SocketService connected');
+        this._connectionObserver.next(true);
+      }).emit('authenticate', {token: localStorage.getItem('token')});
+    });
+  }
+
+  private _disconnect(): void {
+    this._connectionObserver.next(false);
+    if (this.isConnected() === false) {
+      return;
+    }
+    console.debug('SocketService disconnecting');
+    this._socket.disconnect();
   }
 
 }
