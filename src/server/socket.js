@@ -6,13 +6,18 @@ var jwtPublic = require('./token').getPublicKey();
 
 module.exports = function(server) {
 
+  'use strict';
+
   var socketIo = require('socket.io');
   var io = socketIo.listen(server);
 
   io.on('connection', socketioJwt.authorize({
     secret: jwtPublic,
     timeout: 15000
-  })).on('authenticated', function(socket) {
+  }));
+  io.on('authenticated', function(socket) {
+    log.debug('Socket authenticated.');
+
     var sckDir = path.join(__dirname, 'sockets');
     log.debug('Scanning', sckDir, 'for socket event handlers.');
     fs.readdirSync(sckDir).forEach(function(file) {
@@ -21,9 +26,7 @@ module.exports = function(server) {
         require(path.join(sckDir, file)).events(socket);
       }
     });
-    socket.on('disconnect', function() {
-      log.debug('Disconnecting socket.');
-    });
+
   });
 
 };

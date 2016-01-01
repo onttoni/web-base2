@@ -18,7 +18,7 @@ module.exports.events = function(socket) {
     };
   }
 
-  socket.on('chat', function(data) {
+  function chat(data) {
     var event = _.get(data, 'event');
     var msg = _.get(data, 'msg');
     var output;
@@ -32,6 +32,13 @@ module.exports.events = function(socket) {
     }
     socket.emit('chat', output);
     socket.broadcast.emit('chat', output);
+  }
+
+  socket.addListener('chat', chat);
+
+  socket.on('disconnect', function() {
+    log.debug('Disconnecting socket.');
+    socket.removeListener('chat', chat);
   });
 
 };
