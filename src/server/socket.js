@@ -13,7 +13,8 @@ module.exports = function(server) {
 
   io.on('connection', socketioJwt.authorize({
     secret: jwtPublic,
-    timeout: 15000
+    timeout: 10000,
+    required: true
   }));
   io.on('authenticated', function(socket) {
     log.debug('Socket authenticated.');
