@@ -86,6 +86,10 @@ export class SocketService {
         console.debug('SocketService connected');
         this._connectionObserver.next(true);
       }).emit('authenticate', {token: localStorage.getItem('token')});
+      this._socket.on('unauthorized', () => {
+        console.debug('SocketService server rejected connection: unauthorized');
+        this._disconnect();
+      });
     });
   }
 
