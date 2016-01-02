@@ -1,13 +1,14 @@
-{ "name": "web-base",
+{
+  "name": "web-base",
   "version": "0.0.0",
   "description": "Common Node.js modules for web-base.",
   "dependencies": {
+    "CBuffer": "latest",
     "angular2": "latest",
     "bcrypt-nodejs": "latest",
     "body-parser": "latest",
     "bootstrap": "latest",
     "bunyan": "latest",
-    "CBuffer": "latest",
     "compression": "latest",
     "connect-mongo": "latest",
     "es6-promise": "latest",
@@ -28,7 +29,7 @@
     "rxjs": "latest",
     "socket.io": "latest",
     "socket.io-client": "latest",
-    "socketio-jwt": "latest",
+    "socketio-jwt": "git+https://github.com/onttoni/socketio-jwt.git",
     "systemjs": "latest",
     "zone.js": "latest"
   },
