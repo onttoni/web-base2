@@ -90,6 +90,10 @@ export class SocketService {
         console.debug('SocketService server rejected connection: unauthorized');
         this._disconnect();
       });
+      this._socket.on('disconnect', () => {
+        console.debug('SocketService server closed connection');
+        this._disconnect();
+      });
     });
   }
 
