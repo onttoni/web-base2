@@ -11,10 +11,6 @@ module.exports = function(grunt) {
     },
   });
 
-  grunt.registerTask('default', ['debug']);
-  grunt.registerTask('common', ['clean', 'copy', 'cssmin']);
-  grunt.registerTask('debug', ['common', 'webpack:debug']);
-  grunt.registerTask('dist', ['common', 'webpack:debug', 'uglify:dist']);
+  grunt.registerTask('default', ['tsd']);
 
 };
-

@@ -7,7 +7,7 @@
     "angular2": "latest",
     "bcrypt-nodejs": "latest",
     "body-parser": "latest",
-    "bootstrap": "latest",
+    "bootstrap-sass": "latest",
     "bunyan": "latest",
     "compression": "latest",
     "connect-mongo": "latest",
@@ -34,22 +34,19 @@
     "zone.js": "latest"
   },
   "devDependencies": {
+    "copy-webpack-plugin": "latest",
+    "css-loader": "latest",
     "file-loader": "latest",
     "grunt": "latest",
     "grunt-cli": "latest",
-    "grunt-contrib-clean": "latest",
-    "grunt-contrib-copy": "latest",
-    "grunt-contrib-cssmin": "latest",
-    "grunt-contrib-uglify": "latest",
-    "grunt-contrib-watch": "latest",
-    "grunt-mkdir": "latest",
     "grunt-tsd": "latest",
-    "grunt-webpack": "latest",
     "imports-loader": "latest",
     "load-grunt-config": "latest",
     "node-loader": "latest",
+    "node-sass": "latest",
     "nodemon": "latest",
     "raw-loader": "latest",
+    "sass-loader": "latest",
     "style-loader": "latest",
     "ts-loader": "latest",
     "tsd": "latest",
@@ -60,8 +57,7 @@
   },
   "scripts": {
     "start": "nodemon -w src/server/ src/server/server.js |bunyan -o short -L",
-    "grunt-debug": "grunt debug",
     "grunt-tsd": "grunt tsd",
-    "grunt-watch": "grunt watch"
+    "webpack": "webpack"
   }
 }
