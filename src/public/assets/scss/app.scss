@@ -1,3 +1,9 @@
+$icon-font-path: "~bootstrap-sass/assets/fonts/bootstrap/";
+@import "~bootstrap-sass/assets/stylesheets/bootstrap";
+
+$fa-font-path: "~font-awesome/fonts";
+@import "~font-awesome/scss/font-awesome";
+
 /* element selectors */
 a {
   cursor: pointer;
@@ -8,7 +14,7 @@ a > i.fa {
 }
 
 body {
-  color:red; margin:0px;
+  color:black; margin:0px;
   padding-top: 50px;
 }
 
