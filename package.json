@@ -29,7 +29,7 @@
     "rxjs": "latest",
     "socket.io": "latest",
     "socket.io-client": "latest",
-    "socketio-jwt": "git+https://github.com/onttoni/socketio-jwt.git",
+    "socketio-jwt": "https://github.com/onttoni/socketio-jwt.git",
     "systemjs": "latest",
     "zone.js": "latest"
   },
@@ -37,11 +37,7 @@
     "copy-webpack-plugin": "latest",
     "css-loader": "latest",
     "file-loader": "latest",
-    "grunt": "latest",
-    "grunt-cli": "latest",
-    "grunt-tsd": "latest",
     "imports-loader": "latest",
-    "load-grunt-config": "latest",
     "node-loader": "latest",
     "node-sass": "latest",
     "nodemon": "latest",
@@ -49,7 +45,6 @@
     "sass-loader": "latest",
     "style-loader": "latest",
     "ts-loader": "latest",
-    "tsd": "latest",
     "typescript": "latest",
     "typings": "latest",
     "webpack": "latest",
@@ -57,7 +52,6 @@
   },
   "scripts": {
     "start": "nodemon -w src/server/ src/server/server.js |bunyan -o short -L",
-    "grunt-tsd": "grunt tsd",
     "webpack": "webpack"
   }
 }
