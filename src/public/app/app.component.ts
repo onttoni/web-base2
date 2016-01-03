@@ -12,6 +12,8 @@ import {UserProfile} from './components/user/profile';
 import {UserSignin} from './components/user/signin';
 import {UserSignout} from './components/user/signout';
 import {UserSignup} from './components/user/signup';
+require('../assets/scss/app.scss');
+
 
 @Component({
   directives: [ROUTER_DIRECTIVES, Navbar],
