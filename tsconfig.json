@@ -10,7 +10,7 @@
     "target": "es5"
   },
   "files": [
-    "typings/tsd.d.ts",
+    "typings/browser.d.ts",
     "src/public/bootstrap.ts",
     "src/public/vendor.ts",
     "src/public/app/app.component.ts",
