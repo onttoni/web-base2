@@ -12,13 +12,15 @@ import {PersonDoc} from '../../shared/utils/personUtils';
 })
 @View({
   directives: [FORM_DIRECTIVES, NgIf],
-  template: `<div class="form-group">
-              <label class="text-capitalize">{{_key}}</label>
-              <input type="text" class="form-control" *ngIf="_key!='password'"
-                ngModel={{_doc.get(_key)}} #item (change)="onChange(item.value)" required/>
-              <input type="password" class="form-control" *ngIf="_key=='password'"
-                ngModel={{_doc.get(_key)}} #item (change)="onChange(item.value)" required/>
-            </div>`
+  template: `
+    <div class="form-group">
+      <label class="text-capitalize">{{_key}}</label>
+      <input type="text" class="form-control" *ngIf="_key!='password'"
+        ngModel={{_doc.get(_key)}} #item (change)="onChange(item.value)" required/>
+      <input type="password" class="form-control" *ngIf="_key=='password'"
+        ngModel={{_doc.get(_key)}} #item (change)="onChange(item.value)" required/>
+    </div>
+  `
 })
 export class FormGroup {
 
@@ -39,11 +41,13 @@ export class FormGroup {
 })
 @View({
   directives: [FORM_DIRECTIVES],
-  template: `<div class="form-group">
-              <label class="text-capitalize">password.verify</label>
-              <input type="password" class="form-control"
-                [(ngModel)]=passwordVerify #item (change)="onChange(item.value)" required/>
-            </div>`
+  template: `
+    <div class="form-group">
+      <label class="text-capitalize">password.verify</label>
+      <input type="password" class="form-control"
+        [(ngModel)]=passwordVerify #item (change)="onChange(item.value)" required/>
+    </div>
+  `
 })
 export class FormGroupPasswordVerify {
 
