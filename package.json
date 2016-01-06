@@ -20,6 +20,7 @@
     "font-awesome": "latest",
     "jquery": "latest",
     "jsonwebtoken": "latest",
+    "kerberos": "latest",
     "lodash": "latest",
     "method-override": "latest",
     "mongoose": "latest",
