@@ -63,7 +63,6 @@ export class User implements UserInterface {
 @Injectable()
 export class UserService {
   public user$: Observable<User>;
-  private _signedIn: boolean = false;
   private _userObserver: Observer<User>;
   private _user: User = null;
 
@@ -113,7 +112,6 @@ export class UserService {
     let user: any = _.get(data, 'user') || data;
     let token: any = _.get(data, 'token');
     console.debug('Sign in for user:', user);
-    this._signedIn = true;
     this._user = user;
     if (token) {
       console.debug('User got token.');
@@ -124,7 +122,6 @@ export class UserService {
 
   private _unsetSignedIn() {
     console.debug('User sign out.');
-    this._signedIn = false;
     this._user = null;
     localStorage.removeItem('token');
     this._userObserver.next(null);
