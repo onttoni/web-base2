@@ -26,10 +26,6 @@ module.exports = {
     new CopyWebpackPlugin([{from: 'src/public/app/index.html', to: '/'}])
   ],
 
-  bail: true,
-
-  watch: true,
-
   module: {
     loaders: [
       {test: /\.jsx$/, loader: 'jsx?insertPragma=React.DOM&harmony'},

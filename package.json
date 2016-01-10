@@ -43,6 +43,7 @@
     "node-sass": "latest",
     "nodemon": "latest",
     "raw-loader": "latest",
+    "rimraf": "latest",
     "sass-loader": "latest",
     "style-loader": "latest",
     "ts-loader": "latest",
@@ -52,7 +53,11 @@
     "webpack-dev-server": "latest"
   },
   "scripts": {
+    "build": "webpack --progress --profile --colors --display-error-details --display-cached",
+    "build:prod": "webpack --progress --profile --colors --display-error-details --display-cached --optimize-occurence-order --optimize-minimize --optimize-dedupe",
+    "clean": "rimraf node_modules doc typings && npm cache clean",
+    "postinstall": "typings install",
     "start": "nodemon -w src/server/ src/server/server.js |bunyan -o short -L",
-    "webpack": "webpack"
+    "watch": "webpack --watch --progress --profile --colors --display-error-details --display-cached"
   }
 }
