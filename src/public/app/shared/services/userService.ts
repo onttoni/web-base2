@@ -109,7 +109,7 @@ export class UserService {
     .subscribe(data => this._setSignedIn(data), error => this._unsetSignedIn());
   }
 
-  private _setSignedIn(data) {
+  private _setSignedIn(data): void {
     let user: any = _.get(data, 'user') || data;
     let token: any = _.get(data, 'token');
     console.debug('Sign in for user:', user);
@@ -121,7 +121,7 @@ export class UserService {
     this._userObserver.next(this._user);
   }
 
-  private _unsetSignedIn() {
+  private _unsetSignedIn(): void {
     console.debug('User sign out.');
     this._user = null;
     localStorage.removeItem('token');
