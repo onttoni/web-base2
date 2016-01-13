@@ -1,20 +1,31 @@
-import {bootstrap} from 'angular2/platform/browser';
+import {ELEMENT_PROBE_PROVIDERS, bootstrap} from 'angular2/platform/browser';
 import {ROUTER_PROVIDERS} from 'angular2/router';
-import {HTTP_PROVIDERS} from 'angular2/http';
-// include for development builds
-import {ELEMENT_PROBE_PROVIDERS} from 'angular2/platform/common_dom';
-// include for production builds
-// import {enableProdMode} from 'angular2/core';
-
+import {HTTP_PROVIDERS, Http} from 'angular2/http';
+import {enableProdMode, provide} from 'angular2/core';
+import {AuthConfig, AuthHttp} from 'angular2-jwt';
 import {App} from './app/app.component';
 
-// enableProdMode() // include for production builds
+if ('production' === process.env.ENV) {
+  enableProdMode();
+}
+
+function provideAuthHttp() {
+  return provide(AuthHttp, {
+    deps: [Http],
+    useFactory: (http) => {
+      return new AuthHttp(new AuthConfig({
+        tokenName: 'token',
+      }), http);
+    }
+  });
+}
+
 function main() {
   return bootstrap(App, [
-    // These are dependencies of our App
     HTTP_PROVIDERS,
     ROUTER_PROVIDERS,
-    ELEMENT_PROBE_PROVIDERS // remove in production
+    ('production' === process.env.ENV ? [] : ELEMENT_PROBE_PROVIDERS),
+    provideAuthHttp()
   ])
   .catch(err => console.error(err));
 }
