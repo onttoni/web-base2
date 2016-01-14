@@ -10,10 +10,10 @@ module.exports.events = function(socket) {
     User.findOne({_id: userId}, callback);
   }
 
-  function getOutput(user, msg) {
+  function getOutput(decodedToken, msg) {
     return {
       time: Date.now(),
-      userEmail: user.email,
+      userEmail: decodedToken._doc.email,
       msg: msg
     };
   }
