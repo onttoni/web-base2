@@ -1,3 +1,4 @@
+var _ = require('lodash');
 var User = require('../models/user');
 var getUserId = require('../token').getUserId;
 var signUserToken = require('../token').signUserToken;
@@ -38,6 +39,9 @@ module.exports.controller = function(app, apiPrefix, passport) {
   });
 
   app.put(path, function(req, res) {
+    if (_.has(req.body, 'email')) {
+      delete(req.body.email);
+    }
     getUserId(req, function(id) {
       User.findOneAndUpdate({
         _id: id

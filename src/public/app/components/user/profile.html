@@ -2,7 +2,7 @@
 <div>
   <form name="formUserProfile" class="form-user-profile" (ngSubmit)="onSubmit()" novalidate>
     <template ngFor #key [ngForOf]="displayFields">
-      <form-group [key]="key" [doc]="doc.doc" *ngIf="key!='password'"></form-group>
+      <form-group [key]="key" [doc]="doc.doc" *ngIf="!(key=='email'||key=='password')"></form-group>
     </template>
     <div>
       <button class="btn btn-default" type="submit" ng-disabled="formUserProfile.$invalid"><i class="fa fa-floppy-o"></i>Save</button>
