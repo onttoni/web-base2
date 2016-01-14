@@ -1,13 +1,23 @@
 import {Injectable} from 'angular2/core';
 import {Headers, Http, RequestOptionsArgs, URLSearchParams} from 'angular2/http';
-import {AuthHttp} from 'angular2-jwt';
 import {Observable} from 'rxjs/Observable';
 import {Observer} from 'rxjs/Observer';
 import _ = require('lodash');
 
 
+class GetRequestOptions implements RequestOptionsArgs {
+  public headers: Headers = new Headers({
+    'Content-Type': 'application/json',
+    'Authorization': 'Bearer ' + localStorage.getItem('token')
+  });
+}
+
+
 class UpdateRequestOptions implements RequestOptionsArgs {
-  public headers: Headers = new Headers({'Content-Type': 'application/json'});
+  public headers: Headers = new Headers({
+    'Content-Type': 'application/json',
+    'Authorization': 'Bearer ' + localStorage.getItem('token')
+  });
 }
 
 
@@ -19,6 +29,10 @@ class SigninRequestOptions implements RequestOptionsArgs {
 
 class SignoutRequestOptions implements RequestOptionsArgs {
   public search: URLSearchParams = new URLSearchParams('logout=true');
+  public headers: Headers = new Headers({
+    'Content-Type': 'application/json',
+    'Authorization': 'Bearer ' + localStorage.getItem('token')
+  });
 }
 
 
@@ -67,7 +81,7 @@ export class UserService {
   private _userObserver: Observer<User>;
   private _user: User = null;
 
-  constructor(private _http: Http, private _authHttp: AuthHttp) {
+  constructor(private _http: Http) {
     console.debug('UserService constructor.');
     this.user$ = Observable.create(observer => {
       this._userObserver = observer;
@@ -79,7 +93,7 @@ export class UserService {
     if (this._user !== null) {
       return this._user;
     }
-    this._authHttp.get('/api/users')
+    this._http.get('/api/users', new GetRequestOptions())
     .map(response => response.json())
     .subscribe(data => this._setSignedIn(data), error => this._unsetSignedIn());
     return null;
@@ -92,7 +106,7 @@ export class UserService {
   }
 
   public signout(): void {
-    this._authHttp.get('/api/users', new SignoutRequestOptions())
+    this._http.get('/api/users', new SignoutRequestOptions())
     .map(response => response.json())
     .subscribe(null, null, () => this._unsetSignedIn());
   }
@@ -104,7 +118,7 @@ export class UserService {
   }
 
   public update(user: User): void {
-    this._authHttp.put('/api/users', JSON.stringify(user), new UpdateRequestOptions())
+    this._http.put('/api/users', JSON.stringify(user), new UpdateRequestOptions())
     .map(response => response.json())
     .subscribe(data => this._setSignedIn(data), error => this._unsetSignedIn());
   }

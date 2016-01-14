@@ -6,7 +6,6 @@
   "dependencies": {
     "CBuffer": "^1.1.1",
     "angular2": "2.0.0-beta.1",
-    "angular2-jwt": "^0.1.4",
     "bcrypt-nodejs": "^0.0.3",
     "body-parser": "^1.14.2",
     "bootstrap-sass": "^3.3.6",
