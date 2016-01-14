@@ -5,40 +5,11 @@ import {Observer} from 'rxjs/Observer';
 import _ = require('lodash');
 
 
-class GetRequestOptions implements RequestOptionsArgs {
+class UserRequestOptions implements RequestOptionsArgs {
   public headers: Headers = new Headers({
     'Content-Type': 'application/json',
     'Authorization': 'Bearer ' + localStorage.getItem('token')
   });
-}
-
-
-class UpdateRequestOptions implements RequestOptionsArgs {
-  public headers: Headers = new Headers({
-    'Content-Type': 'application/json',
-    'Authorization': 'Bearer ' + localStorage.getItem('token')
-  });
-}
-
-
-class SigninRequestOptions implements RequestOptionsArgs {
-  public search: URLSearchParams = new URLSearchParams('login=true');
-  public headers: Headers = new Headers({'Content-Type': 'application/json'});
-}
-
-
-class SignoutRequestOptions implements RequestOptionsArgs {
-  public search: URLSearchParams = new URLSearchParams('logout=true');
-  public headers: Headers = new Headers({
-    'Content-Type': 'application/json',
-    'Authorization': 'Bearer ' + localStorage.getItem('token')
-  });
-}
-
-
-class SignupRequestOptions implements RequestOptionsArgs {
-  public search: URLSearchParams = new URLSearchParams('signup=true');
-  public headers: Headers = new Headers({'Content-Type': 'application/json'});
 }
 
 
@@ -93,32 +64,32 @@ export class UserService {
     if (this._user !== null) {
       return this._user;
     }
-    this._http.get('/api/users', new GetRequestOptions())
+    this._http.get('/api/users', new UserRequestOptions())
     .map(response => response.json())
     .subscribe(data => this._setSignedIn(data), error => this._unsetSignedIn());
     return null;
   }
 
   public signin(user: User): void {
-    this._http.post('/api/users', JSON.stringify(user), new SigninRequestOptions())
+    this._http.post('/api/users/signin', JSON.stringify(user), new UserRequestOptions())
     .map(response => response.json())
     .subscribe(data => this._setSignedIn(data), error => this._unsetSignedIn());
   }
 
   public signout(): void {
-    this._http.get('/api/users', new SignoutRequestOptions())
+    this._http.get('/api/users/signout', new UserRequestOptions())
     .map(response => response.json())
     .subscribe(null, null, () => this._unsetSignedIn());
   }
 
   public signup(user: User): void {
-    this._http.post('/api/users', JSON.stringify(user), new SignupRequestOptions())
+    this._http.post('/api/users/signup', JSON.stringify(user), new UserRequestOptions())
     .map(response => response.json())
     .subscribe(data => this._setSignedIn(data), error => this._unsetSignedIn());
   }
 
   public update(user: User): void {
-    this._http.put('/api/users', JSON.stringify(user), new UpdateRequestOptions())
+    this._http.put('/api/users', JSON.stringify(user), new UserRequestOptions())
     .map(response => response.json())
     .subscribe(data => this._setSignedIn(data), error => this._unsetSignedIn());
   }

@@ -7,21 +7,20 @@ module.exports.controller = function(app, apiPrefix, passport) {
 
   var path = apiPrefix + 'users/';
 
-  app.post(path, function(req, res, next) {
-    if (req.query.login) {
-      login(req, res, next, passport);
-    } else if (req.query.signup) {
-      signUp(req, res, next, passport);
-    } else {
-      return res.status(400).send({msg: 'bad request'});
-    }
+  app.post(path + 'signin', function(req, res, next) {
+    login(req, res, next, passport);
+  });
+
+  app.post(path + 'signup', function(req, res, next) {
+    signUp(req, res, next, passport);
+  });
+
+  app.get(path + 'signout', function(req, res) {
+    req.logout();
+    return res.status(200).send({msg: 'ok'});
   });
 
   app.get(path, function(req, res) {
-    if (req.query.logout) {
-      req.logout();
-      return res.status(200).send({msg: 'ok'});
-    }
     getUserId(req, function(id) {
       User.findOne({
         _id: id
