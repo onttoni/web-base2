@@ -15,6 +15,7 @@ cfg.jsonwebtoken = {};
 cfg.jsonwebtoken.private = path.join(__dirname, 'keys/jwt_private_key.pem');
 cfg.jsonwebtoken.public = path.join(__dirname, 'keys/jwt_public_key.pem');
 cfg.jsonwebtoken.expiresIn = '24h';
+cfg.jsonwebtoken.sessionFallback = false;
 
 cfg.mongo = {};
 cfg.mongo.host = 'mongo01.local';

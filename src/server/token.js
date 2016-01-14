@@ -6,6 +6,7 @@ var jwtPrivate = 'foobar';
 var jwtPublic = 'foobar';
 var keys = false;
 const jwtExpiresIn = require('./config').jsonwebtoken.expiresIn;
+const sessionFallback = require('./config').jsonwebtoken.sessionFallback;
 
 readKeys();
 
@@ -23,13 +24,16 @@ module.exports = {
       verifyAttrs = [token, jwtPublic];
     }
     function verifyCallback(err, decoded) {
-      var id = _.get(decoded, '_id', null);
+      var id = _.get(decoded, '_doc._id', null);
       if (id && !err) {
-        log.debug('token was used for auth');
+        log.debug('Token was used for auth');
         callback(id);
-      } else {
-        log.debug('session was used for auth');
+      } else if (sessionFallback) {
+        log.debug('Session was used for auth');
         callback(_.get(req, 'session.passport.user', null));
+      } else {
+        log.debug('No user id could be found');
+        callback(null);
       }
     }
     verifyAttrs.push(verifyCallback);
