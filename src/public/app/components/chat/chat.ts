@@ -6,17 +6,23 @@ import {SocketService} from '../../shared/services/socketService';
 
 let chatInstance;
 
+
+interface ChatRxMsg {
+  time: Date;
+  userEmail: string;
+  msg: string;
+}
+
+
 @Component({
   directives: [NgModel, NgFor],
-  // pipes: [],
-  // providers: [],
   selector: 'chat',
   template: require('./chat.html')
 })
 export class Chat {
 
   private _input: string;
-  private _messages: Array<string> = [];
+  private _messages: Array<ChatRxMsg> = [];
   private _socketServiceSubsc: Subscription<boolean>;
 
   constructor(private _router: Router, private _socketService: SocketService) {
@@ -24,7 +30,7 @@ export class Chat {
     chatInstance = this;
   }
 
-  public getMessages(): Array<string> {
+  public getMessages(): Array<ChatRxMsg> {
     return this._messages;
   }
 
@@ -47,7 +53,7 @@ export class Chat {
     );
   }
 
-  public onReceive(data: string): void {
+  public onReceive(data: ChatRxMsg): void {
     chatInstance._messages.push(data);
   }
 
