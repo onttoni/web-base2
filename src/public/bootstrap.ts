@@ -1,7 +1,7 @@
 import {ELEMENT_PROBE_PROVIDERS, bootstrap} from 'angular2/platform/browser';
 import {ROUTER_PROVIDERS} from 'angular2/router';
-import {HTTP_PROVIDERS, Http} from 'angular2/http';
-import {enableProdMode, provide} from 'angular2/core';
+import {HTTP_PROVIDERS} from 'angular2/http';
+import {enableProdMode} from 'angular2/core';
 import {App} from './app/app.component';
 
 if ('production' === process.env.ENV) {
