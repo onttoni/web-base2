@@ -14,6 +14,7 @@
     "src/public/app/app.component.ts",
     "src/public/app/shared/directives/navbar.ts",
     "src/public/app/shared/services/socketService.ts",
+    "src/public/app/shared/services/modalService.ts",
     "src/public/app/shared/services/userService.ts",
     "src/public/app/shared/utils/personUtils.ts",
     "src/public/app/components/about/about.ts",
