@@ -6,9 +6,9 @@
 import {Component, ComponentRef, Directive, DynamicComponentLoader, ElementRef, forwardRef, Host} from 'angular2/core';
 import {Injectable, Injector, provide, ResolvedProvider, SkipSelf, Type, View, ViewEncapsulation} from 'angular2/core';
 import {BrowserDomAdapter} from 'angular2/platform/browser';
+import {Observer} from 'rxjs/Observer';
+import {Observable} from 'rxjs/Observable';
 import _ = require('lodash');
-import {PromiseWrapper} from 'angular2/src/facade/async';
-// import {Observer} from 'rxjs/observer';
 
 
 export class ModalConfig {
@@ -112,25 +112,24 @@ export class ModalRef {
   public containerRef: ComponentRef;
   // Reference to the Component loaded as the dialog content.
   private _contentRef: ComponentRef;
-  // Deferred resolved when the content ComponentRef is set. Only used internally.
-  private _contentRefDeferred: any;
+  // Observable for the content ComponentRef is set event. Only used internally.
+  private _contentRefObservable: Observable<ComponentRef>;
   // Whether the dialog is closed.
   private _isClosed: boolean;
-  // Deferred resolved when the dialog is closed. The promise for this deferred is publicly exposed.
-  private _whenClosedDeferred: any;
+  // Observer to emit the modal closing status. The observable for this observer is publicly exposed.
+  private _whenClosedObserver: Observer<any>;
 
   constructor() {
     this._contentRef = null;
     this.containerRef = null;
     this._isClosed = false;
-
-    this._contentRefDeferred = PromiseWrapper.completer();
-    this._whenClosedDeferred = PromiseWrapper.completer();
   }
 
   set contentRef(value: ComponentRef) {
     this._contentRef = value;
-    this._contentRefDeferred.resolve(value);
+    this._contentRefObservable = Observable.create((observer) => {
+      observer.next(value);
+    });
   }
 
   /** Gets the component instance for the content of the dialog. */
@@ -148,18 +147,20 @@ export class ModalRef {
     throw err;
   }
 
-  /** Gets a promise that is resolved when the dialog is closed. */
-  get whenClosed(): Promise<any> {
-    return this._whenClosedDeferred.promise;
+  /** Gets an observer that is resolved when the dialog is closed. */
+  get whenClosed(): Observable<any> {
+    return Observable.create((observer) => {
+      this._whenClosedObserver = observer;
+    });
   }
 
   /** Closes the dialog. This operation is asynchronous. */
   public close(result: any = null) {
-    this._contentRefDeferred.promise.then((_) => {
+    this._contentRefObservable.subscribe(() => {
       if (!this._isClosed) {
         this._isClosed = true;
         this.containerRef.dispose();
-        this._whenClosedDeferred.resolve(result);
+        this._whenClosedObserver.next(result);
       }
     });
   }
@@ -239,7 +240,7 @@ export class ModalService {
                 containerRef.instance.modalRef = modalRef;
 
                 backdropRefPromise.then(backdropRef => {
-                  modalRef.whenClosed.then(() => {
+                  modalRef.whenClosed.subscribe(() => {
                     backdropRef.dispose();
                   });
                 });
