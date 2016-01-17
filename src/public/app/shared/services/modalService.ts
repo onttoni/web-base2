@@ -180,8 +180,6 @@ class ModalBackdrop {
   }
 
   public onClick() {
-    // TODO(jelbourn): Use MdDialogConfig to capture option for whether dialog should close on
-    // clicking outside.
     if (this._modalConfig.backdrop === true) {
       this._modalRef.close();
     }
