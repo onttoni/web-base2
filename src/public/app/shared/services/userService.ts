@@ -1,5 +1,5 @@
 import {Injectable} from 'angular2/core';
-import {Headers, Http, RequestOptionsArgs, URLSearchParams} from 'angular2/http';
+import {Headers, Http, RequestOptionsArgs} from 'angular2/http';
 import {Observable} from 'rxjs/Observable';
 import {Observer} from 'rxjs/Observer';
 import _ = require('lodash');
