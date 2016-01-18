@@ -108,7 +108,7 @@ class ModalContent {
 
 export class ModalRef {
 
-  // Reference to the MdDialogContainer component.
+  // Reference to the ModalContainer component.
   public containerRef: ComponentRef;
   // Reference to the Component loaded as the dialog content.
   private _contentRef: ComponentRef;
