@@ -1,5 +1,6 @@
 import {Component} from 'angular2/core';
 import {RouterLink} from 'angular2/router';
+import {ModalService} from '../../shared/services/modalService';
 
 @Component({
   directives: [RouterLink],
@@ -9,7 +10,7 @@ import {RouterLink} from 'angular2/router';
   template: require('./home.html')
 })
 export class Home {
-  constructor() {
+  constructor(private _modalService: ModalService) {
     console.debug('Home constructor.');
   }
 

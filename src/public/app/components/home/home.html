@@ -16,5 +16,5 @@
 <div><a href="http://getbootstrap.com/">Bootstrap</a> buttons with FA icons:</div>
 <div class="btn-group">
   <a class="btn btn-default btn-lg" id="btn-reload" (click)="reload()"><i class="fa fa-refresh fa-lg"></i>Reload</a>
-  <a class="btn btn-info btn-lg" [routerLink]="['About']" id="btn-about"><i class="fa fa-info-circle fa-lg"></i>About</a>
+  <a class="btn btn-info btn-lg" (click)="_modalService.callModal('About')" id="btn-about"><i class="fa fa-info-circle fa-lg"></i>About</a>
 </div>
