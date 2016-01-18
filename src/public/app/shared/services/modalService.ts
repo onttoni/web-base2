@@ -202,7 +202,7 @@ class ModalBackdrop {
 export class ModalService {
 
   private _bdAdapter: BrowserDomAdapter = new BrowserDomAdapter();
-  private _modalRegister: Map<String, ModalConfig> = new Map<String, ModalConfig>();
+  private _modalRegistry: Map<String, ModalConfig> = new Map<String, ModalConfig>();
 
   constructor(private _dcLoader: DynamicComponentLoader) {
     console.debug('ModalService constructor');
@@ -262,11 +262,11 @@ export class ModalService {
   }
 
   public openModal(name: String): Promise<any> {
-    return this.open(this._modalRegister.get(name));
+    return this.open(this._modalRegistry.get(name));
   }
 
   public registerModal(name: String, modalConfig: ModalConfig) {
-    this._modalRegister.set(name, modalConfig);
+    this._modalRegistry.set(name, modalConfig);
   }
 
   /** Loads the dialog backdrop (transparent overlay over the rest of the page). */
