@@ -1,8 +1,9 @@
-import {Component} from 'angular2/core';
+import {Component, ElementRef} from 'angular2/core';
 import {RouteConfig, ROUTER_DIRECTIVES} from 'angular2/router';
 import {FORM_PROVIDERS} from 'angular2/common';
 
 import {Navbar} from './shared/directives/navbar';
+import {ModalConfig, ModalService} from './shared/services/modalService';
 import {SocketService} from './shared/services/socketService';
 import {UserService} from './shared/services/userService';
 import {About} from './components/about/about';
@@ -18,7 +19,7 @@ require('../assets/scss/app.scss');
 @Component({
   directives: [ROUTER_DIRECTIVES, Navbar],
   pipes: [],
-  providers: [FORM_PROVIDERS, SocketService, UserService],
+  providers: [FORM_PROVIDERS, ModalService, SocketService, UserService],
   selector: 'app',
   template: `
     <header>
@@ -30,7 +31,6 @@ require('../assets/scss/app.scss');
   `
 })
 @RouteConfig([
-  {component: About, name: 'About', path: '/about'},
   {component: Chat, name: 'Chat', path: '/chat'},
   {component: Home, name: 'Home', path: '/'},
   {component: UserProfile, name: 'Profile', path: '/profile'},
@@ -40,8 +40,9 @@ require('../assets/scss/app.scss');
 ])
 export class App {
 
-  constructor() {
+  constructor(private _elementRef: ElementRef, private _modalService: ModalService) {
     console.debug('App constructor.');
+    this._modalService.registerModal('About', new ModalConfig(About, this._elementRef));
   }
 
 }
