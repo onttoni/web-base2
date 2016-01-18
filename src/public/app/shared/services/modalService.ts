@@ -11,23 +11,35 @@ import {Observable} from 'rxjs/Observable';
 import _ = require('lodash');
 
 
+export class Modal {
+
+  public _whenClosedObserver: Observer<any>;
+
+  get whenClosed(): Observable<any> {
+    return Observable.create((observer) => {
+      this._whenClosedObserver = observer;
+    });
+  }
+}
+
+
 export class ModalConfig {
 
+  private static _defaultWidth: Number = 400;
+  private static _defaultHeight: Number = 250;
+  private static _defaultBackdrop: Boolean = true;
   public backdrop: Boolean;
   public width: Number;
   public height: Number;
-  private _defaultWidth: Number = 400;
-  private _defaultHeight: Number = 250;
-  private _defaultBackdrop: Boolean = true;
 
   /**
    * @param type The component to open.
    * @param elementRef Location where to open the modal
    */
   constructor(public type: Type, public elementRef: ElementRef, width?: Number, height?: Number, backdrop?: Boolean) {
-    this.width = width || this._defaultWidth;
-    this.height = height || this._defaultHeight;
-    this.backdrop = backdrop === undefined ? this._defaultBackdrop : backdrop;
+    this.width = width || ModalConfig._defaultWidth;
+    this.height = height || ModalConfig._defaultHeight;
+    this.backdrop = backdrop === undefined ? ModalConfig._defaultBackdrop : backdrop;
   }
 }
 
@@ -72,24 +84,19 @@ export class ModalConfig {
 })
 class ModalContainer {
 
-  // Ref to the dialog content. Used by the DynamicComponentLoader to load the dialog content.
+  // Ref to the modal content. Used by the DynamicComponentLoader to load the modal content.
   public contentRef: ElementRef;
-  // Ref to the open dialog. Used to close the dialog based on certain events.
-  public modalRef: ModalRef;
+  // Ref to the open modal. Used to close the modal based on certain events.
+  public _modalRef: ModalRef;
 
   constructor() {
     this.contentRef = null;
-    this.modalRef = null;
-  }
-
-  public wrapFocus() {
-    console.debug('ModalContainer.wrapFocus called');
-    // Return the focus to the host element. Blocked on #1251.
+    this._modalRef = null;
   }
 
   public documentKeypress(event: KeyboardEvent) {
     if (event.keyCode === 27) {
-      this.modalRef.close();
+      this._modalRef.close();
     }
   }
 }
@@ -245,12 +252,16 @@ export class ModalService {
                   });
                 });
 
+                contentRef.instance.whenClosed.subscribe(() => {
+                  modalRef.close();
+                });
+
                 return modalRef;
               });
         });
   }
 
-  public callModal(name: String): Promise<any> {
+  public openModal(name: String): Promise<any> {
     return this.open(this._modalRegister.get(name));
   }
 

@@ -1,5 +1,5 @@
 import {Component} from 'angular2/core';
-import {Router} from 'angular2/router';
+import {Modal} from '../../shared/services/modalService';
 
 @Component({
   directives: [],
@@ -8,13 +8,14 @@ import {Router} from 'angular2/router';
   selector: 'about',
   template: require('./about.html')
 })
-export class About {
-  constructor(private _router: Router) {
+export class About extends Modal {
+  constructor() {
     console.debug('About constructor.');
+    super();
   }
 
   public onOk(): void {
-    this._router.navigate(['Home']);
+    this._whenClosedObserver.next(true);
   };
 
   public getUa(): string {
