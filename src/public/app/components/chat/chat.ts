@@ -23,7 +23,7 @@ export class Chat {
 
   private _input: string;
   private _messages: Array<ChatRxMsg> = [];
-  private _socketServiceSubsc: Subscription<boolean>;
+  private _socketServiceSubsc: Subscription;
 
   constructor(private _router: Router, private _socketService: SocketService) {
     console.debug('Chat constructor.');
