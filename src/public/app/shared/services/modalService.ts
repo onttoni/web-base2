@@ -20,7 +20,11 @@ export class ModalConfig {
   private _defaultHeight: Number = 250;
   private _defaultBackdrop: Boolean = true;
 
-  constructor(width?: Number, height?: Number, backdrop?: Boolean) {
+  /**
+   * @param type The component to open.
+   * @param elementRef Location where to open the modal
+   */
+  constructor(public type: Type, public elementRef: ElementRef, width?: Number, height?: Number, backdrop?: Boolean) {
     this.width = width || this._defaultWidth;
     this.height = height || this._defaultHeight;
     this.backdrop = backdrop === undefined ? this._defaultBackdrop : backdrop;
@@ -191,30 +195,28 @@ class ModalBackdrop {
 export class ModalService {
 
   private _bdAdapter: BrowserDomAdapter = new BrowserDomAdapter();
+  private _modalRegister: Map<String, ModalConfig> = new Map<String, ModalConfig>();
 
   constructor(private _dcLoader: DynamicComponentLoader) {
     console.debug('ModalService constructor');
   }
 
   /**
-   * Opens a modal dialog.
-   * @param type The component to open.
-   * @param elementRef The logical location into which the component will be opened.
-   * @param options
+   * Opens a modal.
+   * @param modalConfig
    * @returns Promise for a reference to the dialog.
    */
-  public open(type: Type, elementRef: ElementRef, options: ModalConfig = null): Promise<ModalRef> {
+  public open(modalConfig: ModalConfig): Promise<ModalRef> {
 
-    let modalConfig = options || new ModalConfig();
     let modalRef: ModalRef = new ModalRef();
     let providers = Injector.resolve([
       provide(ModalRef, {useValue: modalRef}),
       provide(ModalConfig, {useValue: modalConfig})
     ]);
-    let backdropRefPromise = this._openBackdrop(elementRef, providers);
+    let backdropRefPromise = this._openBackdrop(modalConfig.elementRef, providers);
 
     // First, load the ModalContainer, into which the given component will be loaded.
-    return this._dcLoader.loadNextToLocation(ModalContainer, elementRef, providers)
+    return this._dcLoader.loadNextToLocation(ModalContainer, modalConfig.elementRef, providers)
         .then(containerRef => {
           let modalElement = containerRef.location.nativeElement;
           this._bdAdapter.appendChild(this._bdAdapter.query('body'), modalElement);
@@ -228,7 +230,7 @@ export class ModalService {
           modalRef.containerRef = containerRef;
 
           // Now load the given component into the ModalContainer.
-          return this._dcLoader.loadNextToLocation(type, containerRef.instance.contentRef, providers)
+          return this._dcLoader.loadNextToLocation(modalConfig.type, containerRef.instance.contentRef, providers)
               .then(contentRef => {
 
                 // Wrap both component refs for the container and the content so that we can return
@@ -248,12 +250,12 @@ export class ModalService {
         });
   }
 
-  public alert(message: string, okMessage: string): Promise<any> {
-    throw 'Not implemented';
+  public callModal(name: String): Promise<any> {
+    return this.open(this._modalRegister.get(name));
   }
 
-  public confirm(message: string, okMessage: string, cancelMessage: string): Promise<any> {
-    throw 'Not implemented';
+  public registerModal(name: String, modalConfig: ModalConfig) {
+    this._modalRegister.set(name, modalConfig);
   }
 
   /** Loads the dialog backdrop (transparent overlay over the rest of the page). */
