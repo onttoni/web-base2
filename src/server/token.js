@@ -61,8 +61,8 @@ function getToken(req) {
 
 function readKeys() {
   try {
-    jwtPrivate = fs.readFileSync(require('./config').jsonwebtoken.private);
-    jwtPublic = fs.readFileSync(require('./config').jsonwebtoken.public);
+    jwtPrivate = fs.readFileSync(require('./config').jsonwebtoken.private).toString('utf8').trim();
+    jwtPublic = fs.readFileSync(require('./config').jsonwebtoken.public).toString('utf8').trim();
     log.info('Server is using keys for tokens');
     keys = true;
   } catch (err) {
