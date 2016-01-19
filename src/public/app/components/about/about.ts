@@ -10,8 +10,8 @@ import {Modal} from '../../shared/services/modalService';
 })
 export class About extends Modal {
   constructor() {
-    console.debug('About constructor.');
     super();
+    console.debug('About constructor.');
   }
 
   public onOk(): void {
