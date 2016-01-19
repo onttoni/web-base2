@@ -3,14 +3,11 @@ var fs = require('fs');
 var expressSession = require('express-session');
 var MongoStore = require('connect-mongo')(expressSession);
 var mongooseConnection = require('./db').connect();
-var sessionSecret = 'foobar';
-
-readSessionSecret();
 
 module.exports = function() {
 
   return expressSession({
-    secret: sessionSecret,
+    secret: readSessionSecret(),
     saveUninitialized: false,
     resave: false,
     store: new MongoStore({
@@ -21,10 +18,13 @@ module.exports = function() {
 };
 
 function readSessionSecret() {
+  var sessionSecret;
   try {
     sessionSecret = fs.readFileSync(require('./config').expressSession.secret);
     log.info('Server is using secret for session');
   } catch (err) {
+    sessionSecret = 'foobar';
     log.warn('Server is using nonsecret for session', err);
   }
+  return sessionSecret.toString('utf8');
 }
