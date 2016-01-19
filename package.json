@@ -62,7 +62,7 @@
     "build:prod": "webpack --progress --profile --colors --display-error-details --display-cached --optimize-occurence-order --optimize-minimize --optimize-dedupe",
     "clean": "rimraf node_modules doc typings && npm cache clean",
     "postinstall": "typings install",
-    "start": "nodemon -w src/server/ src/server/server.js |bunyan -o short -L",
+    "start": "nodemon -w src/server/ src/server/main.js |bunyan -o short -L",
     "watch": "webpack --watch --progress --profile --colors --display-error-details --display-cached"
   }
 }

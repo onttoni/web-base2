@@ -9,7 +9,7 @@ cfg.express.key = path.join(__dirname, 'keys/ssl_key.pem');
 cfg.express.cert = path.join(__dirname, 'keys/ssl_cert.pem');
 
 cfg.expressSession = {};
-cfg.expressSession.secret = path.join(__dirname, 'keys/session-secret.key');;
+cfg.expressSession.secret = path.join(__dirname, 'keys/session-secret.key');
 
 cfg.jsonwebtoken = {};
 cfg.jsonwebtoken.private = path.join(__dirname, 'keys/jwt_private_key.pem');
