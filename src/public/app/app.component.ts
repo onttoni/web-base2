@@ -1,4 +1,4 @@
-import {Component, ElementRef} from 'angular2/core';
+import {Component, ElementRef, Injector, provide, ResolvedProvider} from 'angular2/core';
 import {RouteConfig, ROUTER_DIRECTIVES} from 'angular2/router';
 import {FORM_PROVIDERS} from 'angular2/common';
 
@@ -34,15 +34,27 @@ require('../assets/scss/app.scss');
   {component: Chat, name: 'Chat', path: '/chat'},
   {component: Home, name: 'Home', path: '/'},
   {component: UserProfile, name: 'Profile', path: '/profile'},
-  {component: UserSignin, name: 'Signin', path: '/signin'},
   {component: UserSignout, name: 'Signout', path: '/signout'},
   {component: UserSignup, name: 'Signup', path: '/signup'}
 ])
 export class App {
 
-  constructor(private _elementRef: ElementRef, private _modalService: ModalService) {
+  constructor(private _elementRef: ElementRef, private _modalService: ModalService, private _userService: UserService) {
     console.debug('App constructor.');
-    this._modalService.registerModal('About', new ModalConfig(About, this._elementRef));
+    this._registerGlobalModals();
+  }
+
+  private _getSigninProviders(): ResolvedProvider[] {
+     return Injector.resolve([provide(UserService, {useValue: this._userService})]);
+  }
+
+  private _registerGlobalModals(): void {
+    this._modalService.registerModal(
+      'About', new ModalConfig(About, this._elementRef)
+    );
+    this._modalService.registerModal(
+      'Signin', new ModalConfig(UserSignin, this._elementRef, this._getSigninProviders())
+    );
   }
 
 }
