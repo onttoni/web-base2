@@ -1,3 +1,4 @@
+var GoogleStrategy = require('passport-google-oauth').OAuth2Strategy;
 var LocalStrategy   = require('passport-local').Strategy;
 var User = require('./models/user');
 
@@ -63,3 +64,14 @@ module.exports = function(passport) {
     });
   }));
 };
+
+function readKeys() {
+  try {
+    googleId = fs.readFileSync(require('./config').google.id);
+    googleSecret = fs.readFileSync(require('./config').google.secret);
+    log.info('Server found Google OAuth credentials');
+    google = true;
+  } catch (err) {
+    log.warn('Server disabled Google OAuth', err);
+  }
+}
