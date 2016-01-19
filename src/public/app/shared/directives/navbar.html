@@ -17,7 +17,7 @@
         <li><a [routerLink]="['Chat']"><i class="fa fa-commenting"></i>Chat</a></li>
       </ul>
       <ul class="nav navbar-nav navbar-right">
-        <li *ngIf="!isSignedIn"><a [routerLink]="['Signin']">Sign in</a></li>
+        <li *ngIf="!isSignedIn"><a (click)="_modalService.openModal('Signin')">Sign in</a></li>
         <li *ngIf="!isSignedIn"><a [routerLink]="['Signup']">Sign up</a></li>
         <li *ngIf="isSignedIn"><a class="text-capitalize" [routerLink]="['Profile']">{{userName}}</a></li>
         <li *ngIf="isSignedIn"><a [routerLink]="['Signout']">Sign out</a></li>
