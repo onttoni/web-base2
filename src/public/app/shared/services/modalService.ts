@@ -25,21 +25,16 @@ export class Modal {
 
 export class ModalConfig {
 
-  private static _defaultWidth: Number = 400;
-  private static _defaultHeight: Number = 250;
   private static _defaultBackdrop: Boolean = true;
   public backdrop: Boolean;
   public width: Number;
   public height: Number;
+  public providers: ResolvedProvider[];
 
-  /**
-   * @param type The component to open.
-   * @param elementRef Location where to open the modal
-   */
-  constructor(public type: Type, public elementRef: ElementRef, width?: Number, height?: Number, backdrop?: Boolean) {
-    this.width = width || ModalConfig._defaultWidth;
-    this.height = height || ModalConfig._defaultHeight;
+  constructor(public type: Type, public elementRef: ElementRef, providers?: ResolvedProvider[],
+              width?: Number, height?: Number, backdrop?: Boolean) {
     this.backdrop = backdrop === undefined ? ModalConfig._defaultBackdrop : backdrop;
+    this.providers = providers || [];
   }
 }
 
@@ -216,10 +211,10 @@ export class ModalService {
   public open(modalConfig: ModalConfig): Promise<ModalRef> {
 
     let modalRef: ModalRef = new ModalRef();
-    let providers = Injector.resolve([
+    let providers: ResolvedProvider[] = modalConfig.providers.concat(Injector.resolve([
       provide(ModalRef, {useValue: modalRef}),
       provide(ModalConfig, {useValue: modalConfig})
-    ]);
+    ]));
     let backdropRefPromise = this._openBackdrop(modalConfig.elementRef, providers);
 
     // First, load the ModalContainer, into which the given component will be loaded.
