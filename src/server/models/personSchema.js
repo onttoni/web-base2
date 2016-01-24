@@ -1,4 +1,5 @@
 var mongoose = require('mongoose');
+var timestamps = require('mongoose-timestamp');
 var util = require('util');
 
 var validateEmail = function(email) {
@@ -9,7 +10,6 @@ function PersonSchema() {
   mongoose.Schema.apply(this, arguments);
 
   this.add({
-    provider: {type: String},
     name: {
       family: {type: String, required: true},
       given: {type: String, required: true},
@@ -19,9 +19,10 @@ function PersonSchema() {
       type: String,
       required: true,
       validate: [validateEmail, 'Please fill a valid email address.']
-    },
-    created: Date
+    }
   });
+
+  this.plugin(timestamps);
 
   this.virtual('name.formatted').get(function() {
     return this.name.given + ' ' + this.name.family;
