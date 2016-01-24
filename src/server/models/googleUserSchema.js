@@ -41,7 +41,7 @@ function GoogleProfileSchema() {
     gender: {type: String},
     emails: [new GoogleEmailSchema()],
     objectType: {type: String},
-    id: {type: String, unique: true},
+    id: {type: String, unique: true, sparse: true},
     displayName: {type: String},
     name: {
       familyName: {type: String},
