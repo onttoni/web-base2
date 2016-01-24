@@ -25,14 +25,14 @@ export class Modal {
 
 export class ModalConfig {
 
-  private static _defaultBackdrop: Boolean = true;
-  public backdrop: Boolean;
-  public width: Number;
-  public height: Number;
+  private static _defaultBackdrop: boolean = true;
+  public backdrop: boolean;
+  public width: number;
+  public height: number;
   public providers: ResolvedProvider[];
 
   constructor(public type: Type, public elementRef: ElementRef, providers?: ResolvedProvider[],
-              width?: Number, height?: Number, backdrop?: Boolean) {
+              width?: number, height?: number, backdrop?: boolean) {
     this.backdrop = backdrop === undefined ? ModalConfig._defaultBackdrop : backdrop;
     this.providers = providers || [];
   }
@@ -197,7 +197,7 @@ class ModalBackdrop {
 export class ModalService {
 
   private _bdAdapter: BrowserDomAdapter = new BrowserDomAdapter();
-  private _modalRegistry: Map<String, ModalConfig> = new Map<String, ModalConfig>();
+  private _modalRegistry: Map<string, ModalConfig> = new Map<string, ModalConfig>();
 
   constructor(private _dcLoader: DynamicComponentLoader) {
     console.debug('ModalService constructor');
@@ -256,11 +256,11 @@ export class ModalService {
         });
   }
 
-  public openModal(name: String): Promise<any> {
+  public openModal(name: string): Promise<any> {
     return this.open(this._modalRegistry.get(name));
   }
 
-  public registerModal(name: String, modalConfig: ModalConfig) {
+  public registerModal(name: string, modalConfig: ModalConfig) {
     this._modalRegistry.set(name, modalConfig);
   }
 
