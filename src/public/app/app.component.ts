@@ -6,6 +6,7 @@ import {Navbar} from './shared/directives/navbar';
 import {ModalConfig, ModalService} from './shared/services/modalService';
 import {SocketService} from './shared/services/socketService';
 import {UserService} from './shared/services/userService';
+import {WindowService} from './shared/services/windowService';
 import {About} from './components/about/about';
 import {Chat} from './components/chat/chat';
 import {Home} from './components/home/home';
@@ -19,7 +20,7 @@ require('../assets/scss/app.scss');
 @Component({
   directives: [ROUTER_DIRECTIVES, Navbar],
   pipes: [],
-  providers: [FORM_PROVIDERS, ModalService, SocketService, UserService],
+  providers: [FORM_PROVIDERS, ModalService, SocketService, UserService, WindowService],
   selector: 'app',
   template: `
     <header>
