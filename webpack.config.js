@@ -44,7 +44,8 @@ module.exports = {
             2300, // Duplicate identifier
             2374, // Duplicate string index signature
             2375, // Duplicate number index signature
-            2420  // Class 'EventEmitter' incorrectly implements interface 'NodeJS.EventEmitter'
+            2420, // Class 'EventEmitter' incorrectly implements interface 'NodeJS.EventEmitter'
+            2661  // Cannot re-export name that is not defined in the module.
           ]
         },
         exclude: [/\.spec\.ts$/, /\.e2e\.ts$/, /node_modules/]
