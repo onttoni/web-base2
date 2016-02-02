@@ -8,7 +8,9 @@ var signUserToken = require('../token').signUserToken;
 
 module.exports.controller = function(app, apiPrefix, passport) {
 
-  var path = apiPrefix + 'users/';
+  'use strict';
+
+  let path = apiPrefix + 'users/';
 
   app.post(path + 'signin-local', function(req, res, next) {
     localLogin(req, res, next, passport);
@@ -44,7 +46,8 @@ module.exports.controller = function(app, apiPrefix, passport) {
       if (!obj) {
         return res.status(404).send({msg: 'not found'});
       }
-      var user = obj.user;
+      let user = obj.user;
+      obj.remove();
       return res.status(200).json({user: user, token: signUserToken(user)});
     });
   });
@@ -104,6 +107,9 @@ function localLogin(req, res, next, passport) {
 }
 
 function googleOAuth2Login(req, res, next, passport, options) {
+
+  'use strict';
+
   passport.authenticate('google-login', options, function(err, user, authUrl) {
     if (err) {
       return next(err);
@@ -115,7 +121,7 @@ function googleOAuth2Login(req, res, next, passport, options) {
       if (err) {
         return next(err);
       }
-      var accessCode = new AccessCode({code: base64url(crypto.randomBytes(48)), user: user.id});
+      let accessCode = new AccessCode({code: base64url(crypto.randomBytes(48)), user: user.id});
       accessCode.save();
       return res.redirect('/?access-code=' + accessCode.code);
     });
