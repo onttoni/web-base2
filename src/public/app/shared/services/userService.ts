@@ -2,6 +2,8 @@ import {Injectable} from 'angular2/core';
 import {Headers, Http, RequestOptionsArgs} from 'angular2/http';
 import {Observable} from 'rxjs/Observable';
 import {Observer} from 'rxjs/Observer';
+import {ModalRef, ModalService} from '../services/modalService';
+import {WindowService} from './windowService';
 import _ = require('lodash');
 
 
@@ -51,8 +53,9 @@ export class UserService {
   public user$: Observable<User>;
   private _userObserver: Observer<User>;
   private _user: User = null;
+  private _modalRef: Promise<ModalRef> = null;
 
-  constructor(private _http: Http) {
+  constructor(private _http: Http, private _modalService: ModalService, private _windowService: WindowService) {
     console.debug('UserService constructor.');
     this.user$ = Observable.create(observer => {
       this._userObserver = observer;
@@ -70,10 +73,51 @@ export class UserService {
     return null;
   }
 
-  public signin(user: User): void {
-    this._http.post('/api/users/signin', JSON.stringify(user), new UserRequestOptions())
+  public openSigninModal(): void {
+    this._modalRef = this._modalService.openModal('Signin');
+  }
+
+  public signinLocal(user: User): void {
+    this._http.post('/api/users/signin-local', JSON.stringify(user), new UserRequestOptions())
     .map(response => response.json())
-    .subscribe(data => this._setSignedIn(data), error => this._unsetSignedIn());
+    .subscribe(
+      data => {
+        this._setSignedIn(data);
+      },
+      error => {
+        console.error('Local signin failed', error);
+        this._unsetSignedIn();
+      }
+    );
+  }
+
+  public signinGoogle(): void {
+    this._modalRef.then(modalRef => modalRef.close());
+    this._http.get('/api/users/signin-google')
+    .map(response => response.json())
+    .subscribe(
+      data => {
+        this._windowService.goTo(data.authUrl);
+      },
+      error => {
+        console.error('Google signin failed', error);
+        this._unsetSignedIn();
+      }
+    );
+  }
+
+  public signinAccessCode(token: string): void {
+    this._http.post('/api/users/signin-access-code', JSON.stringify({code: token}), new UserRequestOptions())
+    .map(response => response.json())
+    .subscribe(
+      data => {
+        this._setSignedIn(data);
+      },
+      error => {
+        console.error('Access code signin failed', error);
+        this._unsetSignedIn();
+      }
+    );
   }
 
   public signout(): void {
