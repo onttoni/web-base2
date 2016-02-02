@@ -1,7 +1,6 @@
 import {NgIf} from 'angular2/common';
 import {Component} from 'angular2/core';
 import {RouterLink} from 'angular2/router';
-import {ModalService} from '../services/modalService';
 import {User, UserService} from '../services/userService';
 
 
@@ -17,7 +16,7 @@ export class Navbar {
   public userName: string = '';
   public isSignedIn: boolean = false;
 
-  constructor(private _modalService: ModalService, private _userService: UserService) {
+  constructor(private _userService: UserService) {
     console.debug('Navbar constructor.');
     this._subscribeUserObserver();
   }
