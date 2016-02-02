@@ -35,7 +35,7 @@
     "socket.io-client": "1.3.7",
     "socketio-jwt": "https://github.com/onttoni/socketio-jwt.git",
     "systemjs": "^0.19.15",
-    "zone.js": "^0.5.10"
+    "zone.js": "0.5.10"
   },
   "devDependencies": {
     "copy-webpack-plugin": "^0.3.3",
