@@ -1,8 +1,10 @@
 var bcrypt   = require('bcrypt-nodejs');
 var PersonSchema = require('./personSchema');
+var GoogleUserSchema = require('./googleUserSchema');
 
 var UserSchema = new PersonSchema({
-  password: {type: String, required: true}
+  google: new GoogleUserSchema(),
+  password: {type: String}
 },
 {
   toObject: {getters: true, virtuals: true},
