@@ -23,7 +23,7 @@ export class UserSignin extends Modal {
     this._whenClosedObserver.next(true);
   }
 
-  public onSubmit(): void {
+  public onLocal(): void {
     this._userService.user$.subscribe(
       (user: User) => {
         if (user !== null) {
@@ -32,7 +32,16 @@ export class UserSignin extends Modal {
         }
       }
     );
-    this._userService.signin(new User(this.email, this.password));
+    this._userService.signinLocal(new User(this.email, this.password));
+  }
+
+  public onSignup() {
+    this._whenClosedObserver.next(true);
+    this._router.navigate(['Signup']);
+  }
+
+  public onGoogle() {
+    this._userService.signinGoogle();
   }
 
 }
