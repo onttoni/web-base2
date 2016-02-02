@@ -14,7 +14,7 @@
         <!--
         <li><a [routerLink]="['Friends']"><i class="fa fa-users"></i>Friends</a></li>
         -->
-        <li><a [routerLink]="['Chat']"><i class="fa fa-commenting"></i>Chat</a></li>
+        <li *ngIf="isSignedIn"><a [routerLink]="['Chat']"><i class="fa fa-commenting"></i>Chat</a></li>
       </ul>
       <ul class="nav navbar-nav navbar-right">
         <li *ngIf="!isSignedIn"><a (click)="_userService.openSigninModal()">Sign in</a></li>
