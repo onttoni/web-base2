@@ -23,7 +23,7 @@ module.exports = {
     new webpack.optimize.DedupePlugin(),
     new CommonsChunkPlugin({name: 'vendor', filename: 'vendor.js', minChunks: Infinity}),
     new CommonsChunkPlugin({name: 'common', filename: 'common.js', minChunks: 2, chunks: ['app', 'vendor']}),
-    new CopyWebpackPlugin([{from: 'src/public/app/index.html', to: '/'}])
+    new CopyWebpackPlugin([{from: 'src/public/app/index.html'}])
   ],
 
   module: {
