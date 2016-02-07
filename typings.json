@@ -8,6 +8,6 @@
     "socket.io-client": "github:DefinitelyTyped/DefinitelyTyped/socket.io-client/socket.io-client.d.ts",
     "bootstrap": "github:DefinitelyTyped/DefinitelyTyped/bootstrap/bootstrap.d.ts",
     "jquery": "github:DefinitelyTyped/DefinitelyTyped/jquery/jquery.d.ts",
-    "zone": "github:angular/DefinitelyTyped/zone/zone.d.ts"
+    "zone": "github:DefinitelyTyped/DefinitelyTyped/zone.js/zone.js.d.ts"
   }
 }
