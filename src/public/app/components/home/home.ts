@@ -12,7 +12,8 @@ import {UserService} from '../../shared/services/userService';
   template: require('./home.html')
 })
 export class Home {
-  constructor(private _params: RouteParams, private _router: Router, private _userService: UserService) {
+  constructor(private _params: RouteParams, private _router: Router,
+    private _modalService: ModalService, private _userService: UserService) {
     console.debug('Home constructor.');
     // TODO: Global interceptor for access-code
     let accessCode: any = _.get(this, '_params.params.access-code');
