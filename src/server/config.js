@@ -1,6 +1,7 @@
 var path = require('path');
+var _ = require('lodash');
 
-cfg = {};
+var cfg = {};
 module.exports = cfg;
 
 cfg.express = {};
@@ -36,3 +37,11 @@ cfg.mongo.password = 'nodepw';
 
 cfg.logger = {};
 cfg.logger.level = 'debug';
+
+try {
+  var cfgOverrides = require('./configOverrides');
+} catch (err) {
+}
+if (cfgOverrides) {
+  _.merge(cfg, cfgOverrides);
+}

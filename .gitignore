@@ -1,4 +1,5 @@
 build
+configOverrides.js
 node_modules
 typings
 *.log
