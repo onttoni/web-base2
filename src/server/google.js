@@ -14,12 +14,14 @@ function Strategy(verifyCallback) {
 }
 
 function readGoogleOptions() {
-  var google = {};
+  'use strict';
+  let google = {};
   try {
-    google.clientId = fs.readFileSync(require('./config').googleOAuth2.clientId).toString('utf8').trim();
-    google.clientSecret = fs.readFileSync(require('./config').googleOAuth2.clientSecret).toString('utf8').trim();
-    google.redirectURL = require('./config').googleOAuth2.redirectURL;
-    google.scopes = require('./config').googleOAuth2.scopes;
+    let config = require('./config/base');
+    google.clientId = fs.readFileSync(config.googleOAuth2.clientId).toString('utf8').trim();
+    google.clientSecret = fs.readFileSync(config.googleOAuth2.clientSecret).toString('utf8').trim();
+    google.redirectURL = config.googleOAuth2.redirectURL;
+    google.scopes = config.googleOAuth2.scopes;
   } catch (err) {
     throw new Error('Configuration: cannot use Google OAuth', err);
   }

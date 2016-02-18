@@ -20,7 +20,7 @@ module.exports = function() {
 function readSessionSecret() {
   var sessionSecret;
   try {
-    sessionSecret = fs.readFileSync(require('./config').expressSession.secret).toString('utf8').trim();
+    sessionSecret = fs.readFileSync(require('./config/base').expressSession.secret).toString('utf8').trim();
     log.info('Server is using secret for session');
   } catch (err) {
     sessionSecret = 'foobar';

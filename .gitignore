@@ -1,5 +1,5 @@
 build
-configOverrides.js
+src/server/config/overrides.js
 node_modules
 typings
 *.log

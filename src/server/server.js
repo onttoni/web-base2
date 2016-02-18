@@ -8,8 +8,8 @@ module.exports = function(app) {
   try {
     server = require('https').Server(
       {
-        key: fs.readFileSync(require('./config').express.key),
-        cert: fs.readFileSync(require('./config').express.cert)
+        key: fs.readFileSync(require('./config/base').express.key),
+        cert: fs.readFileSync(require('./config/base').express.cert)
       },
       app
     );

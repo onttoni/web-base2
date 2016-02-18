@@ -1,6 +1,6 @@
 var log = require('./logger');
 var mongoose = require('mongoose');
-var cfg = require('./config');
+var cfg = require('./config/base');
 var dbUri = 'mongodb://' + cfg.mongo.user + ':' + cfg.mongo.password + '@' +
   cfg.mongo.host + ':' + cfg.mongo.port + '/' + cfg.mongo.db;
 
