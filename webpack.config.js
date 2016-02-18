@@ -63,5 +63,5 @@ module.exports = {
     extensions: ['', '.ts', '.js', '.json', '.css', '.html', '.html.tmpl', '.node']
   },
 
-  node: {fs: 'empty', net: 'empty', tls: 'empty'},
+  node: {fs: 'empty', module: 'empty', net: 'empty', tls: 'empty'},
 };
