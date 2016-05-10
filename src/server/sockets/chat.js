@@ -27,7 +27,7 @@ module.exports.events = function(socket) {
     } else if (event) {
       output = getOutput(socket.decoded_token, event);
     } else {
-      console.error('Chat could not recognize payload type.');
+      log.error('Chat could not recognize payload type.');
       return;
     }
     socket.emit('chat', output);
