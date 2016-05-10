@@ -3,8 +3,9 @@
  * https://github.com/angular/angular/blob/master/modules/angular2_material/src/components/dialog/dialog.ts
  */
 
-import {Component, ComponentRef, Directive, DynamicComponentLoader, ElementRef, forwardRef, Host} from 'angular2/core';
-import {Injectable, Injector, provide, ResolvedProvider, SkipSelf, Type, View, ViewEncapsulation} from 'angular2/core';
+import {Component, ComponentRef, Directive, DynamicComponentLoader, forwardRef, Host} from 'angular2/core';
+import {Injectable, ReflectiveInjector, provide, ResolvedReflectiveProvider} from 'angular2/core';
+import {SkipSelf, Type, ViewContainerRef, ViewEncapsulation} from 'angular2/core';
 import {BrowserDomAdapter} from 'angular2/platform/browser';
 import {Observer} from 'rxjs/Observer';
 import {Observable} from 'rxjs/Observable';
@@ -29,9 +30,9 @@ export class ModalConfig {
   public backdrop: boolean;
   public width: number;
   public height: number;
-  public providers: ResolvedProvider[];
+  public providers: ResolvedReflectiveProvider[];
 
-  constructor(public type: Type, public elementRef: ElementRef, providers?: ResolvedProvider[],
+  constructor(public type: Type, public elementRef: ViewContainerRef, providers?: ResolvedReflectiveProvider[],
               width?: number, height?: number, backdrop?: boolean) {
     this.backdrop = backdrop === undefined ? ModalConfig._defaultBackdrop : backdrop;
     this.providers = providers || [];
@@ -40,16 +41,14 @@ export class ModalConfig {
 
 
 @Component({
+  directives: [forwardRef(() => ModalContent)],
+  encapsulation: ViewEncapsulation.None,
   host: {
     'class': 'md',
     'tabindex': '0',
     '(body:keydown)': 'documentKeypress($event)',
   },
-  selector: 'modal-container'
-})
-@View({
-  directives: [forwardRef(() => ModalContent)],
-  encapsulation: ViewEncapsulation.None,
+  selector: 'modal-container',
   template: `
     <style>
       .md {
@@ -80,7 +79,7 @@ export class ModalConfig {
 class ModalContainer {
 
   // Ref to the modal content. Used by the DynamicComponentLoader to load the modal content.
-  public contentRef: ElementRef;
+  public contentRef: ViewContainerRef;
   // Ref to the open modal. Used to close the modal based on certain events.
   public _modalRef: ModalRef;
 
@@ -98,7 +97,7 @@ class ModalContainer {
 
 
 /**
- * Simple decorator used only to communicate an ElementRef to the parent ModalContainer as the
+ * Simple decorator used only to communicate an ViewContainerRef to the parent ModalContainer as the
  * location
  * for where the dialog content will be loaded.
  */
@@ -106,7 +105,7 @@ class ModalContainer {
   selector: 'modal-content',
 })
 class ModalContent {
-  constructor(@Host() @SkipSelf() modalContainer: ModalContainer, elementRef: ElementRef) {
+  constructor(@Host() @SkipSelf() modalContainer: ModalContainer, elementRef: ViewContainerRef) {
     modalContainer.contentRef = elementRef;
   }
 }
@@ -165,7 +164,7 @@ export class ModalRef {
     this._contentRefObservable.subscribe(() => {
       if (!this._isClosed) {
         this._isClosed = true;
-        this.containerRef.dispose();
+        this.containerRef.destroy();
         this._whenClosedObserver.next(result);
       }
     });
@@ -174,12 +173,13 @@ export class ModalRef {
 
 
 @Component({
+  encapsulation: ViewEncapsulation.None,
   host: {
     '(click)': 'onClick()',
   },
-  selector: 'modal-backdrop'
+  selector: 'modal-backdrop',
+  template: ''
 })
-@View({encapsulation: ViewEncapsulation.None, template: ''})
 class ModalBackdrop {
 
   constructor(private _modalRef: ModalRef, private _modalConfig: ModalConfig) {
@@ -211,7 +211,7 @@ export class ModalService {
   public open(modalConfig: ModalConfig): Promise<ModalRef> {
 
     let modalRef: ModalRef = new ModalRef();
-    let providers: ResolvedProvider[] = modalConfig.providers.concat(Injector.resolve([
+    let providers: ResolvedReflectiveProvider[] = modalConfig.providers.concat(ReflectiveInjector.resolve([
       provide(ModalRef, {useValue: modalRef}),
       provide(ModalConfig, {useValue: modalConfig})
     ]));
@@ -243,7 +243,7 @@ export class ModalService {
 
                 backdropRefPromise.then(backdropRef => {
                   modalRef.whenClosed.subscribe(() => {
-                    backdropRef.dispose();
+                    backdropRef.destroy();
                   });
                 });
 
@@ -265,7 +265,7 @@ export class ModalService {
   }
 
   /** Loads the dialog backdrop (transparent overlay over the rest of the page). */
-  private _openBackdrop(elementRef: ElementRef, providers: ResolvedProvider[]): Promise<ComponentRef> {
+  private _openBackdrop(elementRef: ViewContainerRef, providers: ResolvedReflectiveProvider[]): Promise<ComponentRef> {
     return this._dcLoader.loadNextToLocation(ModalBackdrop, elementRef, providers)
       .then((componentRef) => {
         let backdropElement = componentRef.location.nativeElement;

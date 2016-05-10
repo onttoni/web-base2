@@ -1,4 +1,4 @@
-import {Component, View} from 'angular2/core';
+import {Component} from 'angular2/core';
 import {FORM_DIRECTIVES, NgFor, NgIf} from 'angular2/common';
 import {Router, RouterLink} from 'angular2/router';
 import {User, UserService} from '../../shared/services/userService';
@@ -6,11 +6,9 @@ import {PersonDoc} from '../../shared/utils/personUtils';
 
 
 @Component({
-  properties: ['doc', 'key'],
-  selector: 'form-group'
-})
-@View({
   directives: [FORM_DIRECTIVES],
+  properties: ['doc', 'key'],
+  selector: 'form-group',
   template: `<div class="form-group">
               <label class="text-capitalize">{{key}}</label>
               <input type="text" class="form-control"
@@ -29,8 +27,7 @@ export class FormGroup {
 }
 
 
-@Component({})
-@View({
+@Component({
   directives: [FORM_DIRECTIVES, FormGroup, NgFor, NgIf, RouterLink],
   // providers: [],
   // pipes: [],

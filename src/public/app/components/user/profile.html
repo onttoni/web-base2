@@ -1,7 +1,7 @@
 <h2>Profile</h2>
 <div>
   <form name="formUserProfile" class="form-user-profile" (ngSubmit)="onSubmit()" novalidate>
-    <template ngFor #key [ngForOf]="displayFields">
+    <template ngFor let-key [ngForOf]="displayFields">
       <form-group [key]="key" [doc]="doc.doc" *ngIf="!(key=='email'||key=='password')"></form-group>
     </template>
     <div>

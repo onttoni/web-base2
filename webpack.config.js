@@ -45,6 +45,7 @@ module.exports = {
             2374, // Duplicate string index signature
             2375, // Duplicate number index signature
             2420, // Class 'EventEmitter' incorrectly implements interface 'NodeJS.EventEmitter'
+            2502, // 'BuffType' is referenced directly or indirectly in its own type annotation
             2661  // Cannot re-export name that is not defined in the module.
           ]
         },

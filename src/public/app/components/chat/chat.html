@@ -2,13 +2,11 @@
 <div>
   <form name="formChat" class="form-chat" novalidate>
     <div class="form-group chat-msg-window">
-      <template ngFor #msg [ngForOf]="getMessages()">
-        <div>
+        <div *ngFor="let msg of getMessages()">
           <span class="chat-msg time">{{msg.time | date: 'HH:mm:ss'}}</span>
           <span class="chat-msg user-email">{{msg.userEmail}}</span>
           <span class="chat-msg">{{msg.msg}}</span>
         </div>
-      </template>
     </div>
   </form>
   <form class="form-inline">

@@ -1,4 +1,4 @@
-import {Component, ElementRef, Injector, provide, ResolvedProvider} from 'angular2/core';
+import {Component, provide, ReflectiveInjector, ResolvedReflectiveProvider, ViewContainerRef} from 'angular2/core';
 import {RouteConfig, ROUTER_DIRECTIVES} from 'angular2/router';
 import {FORM_PROVIDERS} from 'angular2/common';
 
@@ -40,13 +40,17 @@ require('../assets/scss/app.scss');
 ])
 export class App {
 
-  constructor(private _elementRef: ElementRef, private _modalService: ModalService, private _userService: UserService) {
+  constructor(
+    private _elementRef: ViewContainerRef,
+    private _modalService: ModalService,
+    private _userService: UserService
+  ) {
     console.debug('App constructor.');
     this._registerGlobalModals();
   }
 
-  private _getSigninProviders(): ResolvedProvider[] {
-     return Injector.resolve([provide(UserService, {useValue: this._userService})]);
+  private _getSigninProviders(): ResolvedReflectiveProvider[] {
+     return ReflectiveInjector.resolve([provide(UserService, {useValue: this._userService})]);
   }
 
   private _registerGlobalModals(): void {

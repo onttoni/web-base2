@@ -18,7 +18,7 @@ class ConnectOpts {
 @Injectable()
 export class SocketService {
   public connection$: Observable<boolean>;
-  private _clientObservables: {[prefix: string]: Observable<string>} = {};
+  private _clientObservables: {[prefix: string]: Observable<any>} = {};
   private _connectionObserver: Observer<boolean>;
   private _socket = null;
 

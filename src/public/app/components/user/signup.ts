@@ -1,4 +1,4 @@
-import {Component, ViewChild, View} from 'angular2/core';
+import {Component, ViewChild} from 'angular2/core';
 import {FORM_DIRECTIVES, NgFor, NgIf} from 'angular2/common';
 import {Router, RouterLink} from 'angular2/router';
 import {User, UserService} from '../../shared/services/userService';
@@ -6,12 +6,10 @@ import {PersonDoc} from '../../shared/utils/personUtils';
 
 
 @Component({
+  directives: [FORM_DIRECTIVES, NgIf],
   properties: ['_doc', '_key'],
   providers: [],
-  selector: 'form-group'
-})
-@View({
-  directives: [FORM_DIRECTIVES, NgIf],
+  selector: 'form-group',
   template: `
     <div class="form-group">
       <label class="text-capitalize">{{_key}}</label>
@@ -35,12 +33,10 @@ export class FormGroup {
 
 
 @Component({
+  directives: [FORM_DIRECTIVES],
   properties: [],
   providers: [],
-  selector: 'form-group-password-verify'
-})
-@View({
-  directives: [FORM_DIRECTIVES],
+  selector: 'form-group-password-verify',
   template: `
     <div class="form-group">
       <label class="text-capitalize">password.verify</label>
