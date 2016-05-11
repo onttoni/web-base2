@@ -17,7 +17,7 @@ function readGoogleOptions() {
   'use strict';
   let google = {};
   try {
-    let config = require('./config/base');
+    let config = appConfig;
     google.clientId = fs.readFileSync(config.googleOAuth2.clientId).toString('utf8').trim();
     google.clientSecret = fs.readFileSync(config.googleOAuth2.clientSecret).toString('utf8').trim();
     google.redirectURL = config.googleOAuth2.redirectURL;

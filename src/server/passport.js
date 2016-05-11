@@ -43,7 +43,7 @@ module.exports = function(passport) {
     )
   );
 
-  if (require('./config/base').googleOAuth2.enabled === true) {
+  if (appConfig.googleOAuth2.enabled === true) {
     passport.use(
       'google-login',
       new GoogleStrategy(GoogleVerify)

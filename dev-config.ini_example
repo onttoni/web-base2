@@ -1,0 +1,9 @@
+[logger]
+level = debug
+
+[database]
+host = localhost.localdomain
+port = 27017
+db = people
+user = username
+password = somepassword

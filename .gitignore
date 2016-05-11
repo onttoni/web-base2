@@ -1,7 +1,7 @@
 build
-src/server/config/overrides.js
 node_modules
 typings
 *.log
 *.pem
 *.key
+*.ini

@@ -1,4 +1,3 @@
-var log = require('./logger');
 var compression = require('compression');
 var express = require('express');
 var fs = require('fs');
@@ -7,8 +6,10 @@ var bodyParser = require('body-parser');
 var path = require('path');
 var passport = require('passport');
 const apiPrefix = '/api/';
-const httpPort = require('./config/base').express.httpPort;
 const publicDir = path.join(__dirname, '../../build/public');
+require('./config/app')(process.argv[2]);
+// Modules depending on global appConfig must be placed after config/app require.
+var log = require('./logger');
 var session = require('./session')();
 var server = require('./server')(app);
 require('./socket')(server);
@@ -44,5 +45,5 @@ app.get('*', function(req, res) {
   res.sendFile('app/index.html', {root: publicDir});
 });
 
-server.listen(httpPort);
-log.info('Server listening on port', httpPort);
+server.listen(appConfig.http.port);
+log.info('Server listening on port', appConfig.http.port);

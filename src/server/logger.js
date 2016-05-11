@@ -1,2 +1,1 @@
-cfg = require('./config/base');
-module.exports = require('bunyan').createLogger({name: 'server', level: cfg.logger.level});
+module.exports = require('bunyan').createLogger({name: 'server', level: appConfig.logger.level});

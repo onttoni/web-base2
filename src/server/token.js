@@ -5,8 +5,8 @@ var log = require('./logger');
 var jwtPrivate = 'foobar';
 var jwtPublic = 'foobar';
 var keys = false;
-const jwtExpiresIn = require('./config/base').jsonwebtoken.expiresIn;
-const sessionFallback = require('./config/base').jsonwebtoken.sessionFallback;
+const jwtExpiresIn = appConfig.jsonwebtoken.expiresIn;
+const sessionFallback = appConfig.jsonwebtoken.sessionFallback;
 
 readKeys();
 
@@ -61,8 +61,8 @@ function getToken(req) {
 
 function readKeys() {
   try {
-    jwtPrivate = fs.readFileSync(require('./config/base').jsonwebtoken.private).toString('utf8').trim();
-    jwtPublic = fs.readFileSync(require('./config/base').jsonwebtoken.public).toString('utf8').trim();
+    jwtPrivate = fs.readFileSync(appConfig.jsonwebtoken.private).toString('utf8').trim();
+    jwtPublic = fs.readFileSync(appConfig.jsonwebtoken.public).toString('utf8').trim();
     log.info('Server is using keys for tokens');
     keys = true;
   } catch (err) {

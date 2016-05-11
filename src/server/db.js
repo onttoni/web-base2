@@ -1,8 +1,7 @@
 var log = require('./logger');
 var mongoose = require('mongoose');
-var cfg = require('./config/base');
-var dbUri = 'mongodb://' + cfg.mongo.user + ':' + cfg.mongo.password + '@' +
-  cfg.mongo.host + ':' + cfg.mongo.port + '/' + cfg.mongo.db;
+var dbUri = 'mongodb://' + appConfig.database.user + ':' + appConfig.database.password + '@' +
+  appConfig.database.host + ':' + appConfig.database.port + '/' + appConfig.database.db;
 
 function connect() {
   log.info('Connecting MongoDB:', dbUri);
