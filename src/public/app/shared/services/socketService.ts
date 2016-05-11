@@ -33,7 +33,7 @@ export class SocketService {
     return _.get(this, '_socket.connected', false);
   }
 
-  public registerReceiver(prefix: string, callback: any): void {
+  public registerReceiver(prefix: string, callback: Function): void {
     this._connect();
     this._clientObservables[prefix] = Observable.fromEventPattern(
       () => {
@@ -62,7 +62,7 @@ export class SocketService {
     }
   }
 
-  public emit(eventName: string, data?: any, callback?: any): void {
+  public emit(eventName: string, data?: any, callback?: Function): void {
     if (this.isConnected() === false) {
       return;
     }
