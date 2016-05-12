@@ -5,8 +5,6 @@ var app = express();
 var bodyParser = require('body-parser');
 var path = require('path');
 var passport = require('passport');
-const apiPrefix = '/api/';
-const publicDir = path.join(__dirname, '../../build/public');
 require('./config/app')(process.argv[2]);
 // Modules depending on global appConfig must be placed after config/app require.
 var log = require('./logger');
@@ -14,6 +12,8 @@ var session = require('./session')();
 var server = require('./server')(app);
 require('./socket')(server);
 require('./passport')(passport);
+const apiPrefix = '/api/';
+const publicDir = appConfig.http.publicDir;
 
 // All middleware should be placed before routes.
 app.use(compression());

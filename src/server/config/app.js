@@ -20,6 +20,7 @@ module.exports = function(configPath) {
   cfg.http.port = 8080;
   cfg.http.tlsKey = '';
   cfg.http.tlsCert = '';
+  cfg.http.publicDir = path.join(__dirname, '../../../build/public');
 
   cfg.session = {};
   cfg.session.secret = '';
