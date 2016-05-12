@@ -67,7 +67,7 @@
     "build-prod": "./script.sh build-prod",
     "clean": "rimraf node_modules doc typings && npm cache clean",
     "postinstall": "typings install",
-    "start": "nodemon -w src/server/ src/server/main.js dev-config.ini |bunyan -o short -L",
+    "start": "nodemon -w src/server/ src/server/main.js dev.conf |bunyan -o short -L",
     "watch": "./script.sh watch"
   }
 }

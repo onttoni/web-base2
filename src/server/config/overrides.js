@@ -9,7 +9,7 @@ module.exports = function(configPath) {
   if (!configPath) {
     return null;
   }
-  // Just to throw an error if ini-file is not where its supposed to be.
+  // Just to throw an error if config file is not where its supposed to be.
   fs.statSync(configPath).isFile();
   var config = ini.parse(fs.readFileSync(configPath, 'utf-8'));
 

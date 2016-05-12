@@ -10,8 +10,8 @@ module.exports = function(configPath) {
 
   /**
    * Configuration defaults below. You can pass path
-   * to an ini-file when running main.js. Matching
-   * configuration options read from the ini-file will
+   * to configuration file when running main.js. Matching
+   * configuration options read from the file will
    * be used to override these values.
    */
 

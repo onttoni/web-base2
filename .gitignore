@@ -4,4 +4,5 @@ typings
 *.log
 *.pem
 *.key
-*.ini
+*.conf
+
