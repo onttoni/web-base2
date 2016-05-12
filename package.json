@@ -63,11 +63,11 @@
     "webpack-dev-server": "^1.12.1"
   },
   "scripts": {
-    "build": "webpack --progress --profile --colors --display-error-details --display-cached",
-    "build:prod": "webpack --progress --profile --colors --display-error-details --display-cached --optimize-occurence-order --optimize-minimize --optimize-dedupe",
+    "build-dev": "./script.sh build-dev",
+    "build-prod": "./script.sh build-prod",
     "clean": "rimraf node_modules doc typings && npm cache clean",
     "postinstall": "typings install",
     "start": "nodemon -w src/server/ src/server/main.js dev-config.ini |bunyan -o short -L",
-    "watch": "webpack --watch --progress --profile --colors --display-error-details --display-cached"
+    "watch": "./script.sh watch"
   }
 }
