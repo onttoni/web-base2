@@ -18,22 +18,22 @@ module.exports = function(configPath) {
   cfg.http = {};
   cfg.http.hostName = 'localhost';
   cfg.http.port = 8080;
-  cfg.http.tlsKey = path.join(__dirname, '../keys/tls_key.pem');
-  cfg.http.tlsCert = path.join(__dirname, '../keys/tls_cert.pem');
+  cfg.http.tlsKey = '';
+  cfg.http.tlsCert = '';
 
-  cfg.expressSession = {};
-  cfg.expressSession.secret = path.join(__dirname, '../keys/session-secret.key');
+  cfg.session = {};
+  cfg.session.secret = '';
 
   cfg.jsonwebtoken = {};
-  cfg.jsonwebtoken.private = path.join(__dirname, '../keys/jwt_private_key.pem');
-  cfg.jsonwebtoken.public = path.join(__dirname, '../keys/jwt_public_key.pem');
+  cfg.jsonwebtoken.private = '';
+  cfg.jsonwebtoken.public = '';
   cfg.jsonwebtoken.expiresIn = '24h';
   cfg.jsonwebtoken.sessionFallback = false;
 
   cfg.googleOAuth2 = {};
   cfg.googleOAuth2.enabled = true;
-  cfg.googleOAuth2.clientId = path.join(__dirname, '../keys/google-client-id.key');
-  cfg.googleOAuth2.clientSecret = path.join(__dirname, '../keys/google-client-secret.key');
+  cfg.googleOAuth2.clientId = '';
+  cfg.googleOAuth2.clientSecret = '';
   cfg.googleOAuth2.callback = '/auth/callback-google';
   cfg.googleOAuth2.redirectURL =
     'https://' +  cfg.http.hostName + ':' + cfg.http.port + cfg.googleOAuth2.callback;

@@ -7,3 +7,19 @@ port = 27017
 db = people
 user = username
 password = somepassword
+
+[http]
+port = 8888
+tlsKey = keys/tls_key.pem
+tlsCert = keys/tls_cert.pem
+
+[session]
+secret = keys/session-secret.key
+
+[jsonwebtoken]
+private = keys/jwt_private_key.pem
+public = keys/jwt_public_key.pem
+
+[googleOAuth2]
+clientId = keys/google-client-id.key
+clientSecret = keys/google-client-secret.key
