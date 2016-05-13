@@ -36,8 +36,6 @@ module.exports = function(configPath) {
   cfg.googleOAuth2.clientId = '';
   cfg.googleOAuth2.clientSecret = '';
   cfg.googleOAuth2.callback = '/auth/callback-google';
-  cfg.googleOAuth2.redirectURL =
-    'https://' +  cfg.http.hostName + ':' + cfg.http.port + cfg.googleOAuth2.callback;
   cfg.googleOAuth2.scopes = ['email', 'profile'];
 
   cfg.database = {};

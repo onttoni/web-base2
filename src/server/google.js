@@ -20,7 +20,8 @@ function readGoogleOptions() {
     let config = appConfig;
     google.clientId = fs.readFileSync(config.googleOAuth2.clientId).toString('utf8').trim();
     google.clientSecret = fs.readFileSync(config.googleOAuth2.clientSecret).toString('utf8').trim();
-    google.redirectURL = config.googleOAuth2.redirectURL;
+    google.redirectURL =
+      'https://' +  appConfig.http.hostName + ':' + appConfig.http.port + appConfig.googleOAuth2.callback;
     google.scopes = config.googleOAuth2.scopes;
   } catch (err) {
     throw new Error('Configuration: cannot use Google OAuth', err);
