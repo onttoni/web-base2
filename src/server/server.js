@@ -5,18 +5,22 @@ module.exports = function(app) {
 
   var server;
 
-  try {
-    server = require('https').Server(
-      {
-        key: fs.readFileSync(appConfig.http.tlsKey),
-        cert: fs.readFileSync(appConfig.http.tlsCert)
-      },
-      app
-    );
-    log.info('Server enabled TLS');
-  } catch (err) {
+  if (appConfig.http.tls.enabled) {
+    try {
+      server = require('https').Server(
+        {
+          key: fs.readFileSync(appConfig.http.tls.key),
+          cert: fs.readFileSync(appConfig.http.tls.cert)
+        },
+        app
+      );
+      log.info('Server enabled TLS');
+    } catch (err) {
+      log.fatal('Configuration: TLS is enabled but misconfigured (%s)', err);
+      process.exit(1);
+    }
+  } else {
     server = require('http').Server(app);
-    log.warn('Server disabled TLS', err);
   }
 
   return server;

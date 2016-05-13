@@ -10,8 +10,10 @@ password = somepassword
 
 [http]
 port = 8888
-tlsKey = keys/tls_key.pem
-tlsCert = keys/tls_cert.pem
+[http.tls]
+enabled = false
+key = keys/tls_key.pem
+cert = keys/tls_cert.pem
 
 [session]
 secret = keys/session-secret.key

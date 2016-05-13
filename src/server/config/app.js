@@ -18,8 +18,10 @@ module.exports = function(configPath) {
   cfg.http = {};
   cfg.http.hostName = 'localhost';
   cfg.http.port = 8080;
-  cfg.http.tlsKey = '';
-  cfg.http.tlsCert = '';
+  cfg.http.tls = {};
+  cfg.http.tls.enabled = false;
+  cfg.http.tls.key = '';
+  cfg.http.tls.cert = '';
   cfg.http.publicDir = path.join(__dirname, '../../../build/public');
 
   cfg.session = {};
