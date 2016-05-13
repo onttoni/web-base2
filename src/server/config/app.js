@@ -46,6 +46,7 @@ module.exports = function(configPath) {
 
   cfg.logger = {};
   cfg.logger.level = 'info';
+  cfg.logger.path = '';
 
   cfgOverrides = require('./overrides')(configPath);
   if (cfgOverrides) {

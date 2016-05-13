@@ -19,9 +19,13 @@ const publicDir = appConfig.http.publicDir;
 app.use(compression());
 log.info('Serving static files from:', publicDir);
 app.use(express.static(publicDir));
-app.use(require('express-bunyan-logger')({
-  parseUA: false,
-  format: ':method :url :status-code'}));
+app.use(require('bunyan-middleware')({
+  headerName: 'X-Request-Id',
+  propertyName: 'reqId',
+  logName: 'req_id',
+  obscureHeaders: [],
+  logger: log
+}));
 app.use(session);
 app.use(passport.initialize());
 app.use(passport.session());
