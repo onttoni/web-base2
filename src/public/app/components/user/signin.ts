@@ -5,8 +5,6 @@ import {Modal} from '../../shared/services/modalService';
 
 @Component({
   directives: [RouterLink],
-  pipes: [],
-  providers: [],
   selector: 'signin',
   template: require('./signin.html')
 })

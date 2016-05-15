@@ -3,9 +3,6 @@ import {UserService} from '../../shared/services/userService';
 
 
 @Component({
-  directives: [],
-  pipes: [],
-  providers: [],
   selector: 'signout',
   template: require('./signout.html')
 })
