@@ -4,15 +4,19 @@ import {HTTP_PROVIDERS} from 'angular2/http';
 import {enableProdMode} from 'angular2/core';
 import {App} from './app/app.component';
 
-if (process.env.NODE_ENV !== 'dev') {
+let dev: boolean = process.env.NODE_ENV === 'dev';
+
+if (!dev) {
   enableProdMode();
+  console.debug = () => undefined;
+  console.log = () => undefined;
 }
 
 function main() {
   return bootstrap(App, [
     HTTP_PROVIDERS,
     ROUTER_PROVIDERS,
-    (process.env.NODE_ENV === 'dev' ? ELEMENT_PROBE_PROVIDERS : [])
+    (dev ? ELEMENT_PROBE_PROVIDERS : [])
   ])
   .catch(err => console.error(err));
 }
