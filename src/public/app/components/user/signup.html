@@ -1,7 +1,7 @@
 <h2>Sign up</h2>
 <div>
   <form class="form-user-signup" (ngSubmit)="onSubmit()" novalidate>
-    <template ngFor #key [ngForOf]="_displayFields">
+    <template ngFor let-key [ngForOf]="_displayFields">
       <form-group [_key]="key" [_doc]="_doc.doc"></form-group>
     </template>
     <form-group-password-verify></form-group-password-verify>
