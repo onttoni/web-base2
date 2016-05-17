@@ -1,3 +1,8 @@
+require('./config/app')(process.argv[2]);
+var log = require('./logger');
+log.info('Server started');
+bindProcessOnExit();
+
 var compression = require('compression');
 var express = require('express');
 var fs = require('fs');
@@ -5,10 +10,10 @@ var app = express();
 var bodyParser = require('body-parser');
 var path = require('path');
 var passport = require('passport');
-require('./config/app')(process.argv[2]);
+
 // Modules depending on global appConfig must be placed after config/app require.
-var log = require('./logger');
-var session = require('./session')();
+var mongooseConnection = require('./db').connect();
+var session = require('./session')(mongooseConnection);
 var server = require('./server')(app);
 require('./socket')(server);
 require('./passport')(passport);
@@ -51,3 +56,13 @@ app.get('*', function(req, res) {
 
 server.listen(appConfig.http.port);
 log.info('Server listening on port', appConfig.http.port);
+
+function bindProcessOnExit() {
+  process.on('exit', (code) => {
+    if (log) {
+      log.info('Server finished with code %d', code);
+      log.flush();
+    }
+  });
+
+}

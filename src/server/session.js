@@ -2,9 +2,8 @@ var log = require('./logger');
 var fs = require('fs');
 var expressSession = require('express-session');
 var MongoStore = require('connect-mongo')(expressSession);
-var mongooseConnection = require('./db').connect();
 
-module.exports = function() {
+module.exports = function(mongooseConnection) {
 
   return expressSession({
     secret: readSessionSecret(),
